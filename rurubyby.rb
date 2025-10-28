@@ -1,5 +1,6 @@
 require 'optparse'
-require 'prism'
+
+require_relative 'lib/rurubyby/vm'
 
 options = {
   verbose: false,
@@ -17,21 +18,4 @@ OptionParser.new do |opts|
   end
 end.parse!
 
-script = options[:script]
-
-if script
-  puts "Executing: '#{script}'"
-
-  parse_result = Prism.parse(script)
-
-  puts
-  puts "parse_result:"
-  puts parse_result.inspect
-
-  ast = parse_result.value
-  puts
-  puts "AST:"
-  puts ast.inspect
-else
-  puts "No script given"
-end
+Rurubyby::Vm.new(options).run
