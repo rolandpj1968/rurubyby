@@ -1,4 +1,4 @@
-require 'prism'
+require_relative 'parser'
 
 module Rurubyby
   class Vm
@@ -14,18 +14,12 @@ module Rurubyby
       if script
         puts "Executing: '#{script}'"
 
-        parse_result = Prism.parse(script)
+        ast = Parser.new(script).ast
 
-        # puts
-        # puts "parse_result:"
-        # puts parse_result.inspect
-
-        ast = parse_result.value
-        # puts
-        # puts "AST:"
-        # puts ast.inspect
-
+        puts
         puts "AST root isa #{ast.class}"
+        puts
+        puts "AST: #{ast}"
       else
         puts "No script given"
       end
