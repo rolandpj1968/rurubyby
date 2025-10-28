@@ -3,8 +3,12 @@ require 'prism'
 require_relative 'ast/nil_literal'
 require_relative 'ast/true_literal'
 require_relative 'ast/false_literal'
+require_relative 'ast/self_literal'
+
 require_relative 'ast/integer_literal'
 require_relative 'ast/float_literal'
+require_relative 'ast/string_literal'
+require_relative 'ast/symbol_literal'
 
 module Rurubyby
   class Parser
@@ -44,10 +48,16 @@ module Rurubyby
         Ast::TrueLiteral::TRUE
       when Prism::FalseNode
         Ast::FalseLiteral::FALSE
+      when Prism::SelfNode
+        Ast::SelfLiteral::SELF
       when Prism::IntegerNode
         Ast::IntegerLiteral.from(prism_node.value)
       when Prism::FloatNode
         Ast::FloatLiteral.from(prism_node.value)
+      when Prism::StringNode
+        Ast::StringLiteral.from(prism_node.unescaped)
+      when Prism::SymbolNode
+        Ast::SymbolLiteral.from(prism_node.unescaped)
       else
         raise "Unexpected Prism node type #{prism_node.class}"
       end
