@@ -1,6 +1,10 @@
 require 'prism'
 
-require_relative 'ast/nil_value'
+require_relative 'ast/nil_literal'
+require_relative 'ast/true_literal'
+require_relative 'ast/false_literal'
+require_relative 'ast/integer_literal'
+require_relative 'ast/float_literal'
 
 module Rurubyby
   class Parser
@@ -28,14 +32,22 @@ module Rurubyby
 
         case body.length
         when 0
-          Ast::NilValue::NIL
+          Ast::NilLiteral::NIL
         when 1
           transform(body[0])
         else
           raise "Prism::StatementsNode of length > 1 not supported"
         end
       when Prism::NilNode
-        Ast::NilValue::NIL
+        Ast::NilLiteral::NIL
+      when Prism::TrueNode
+        Ast::TrueLiteral::TRUE
+      when Prism::FalseNode
+        Ast::FalseLiteral::FALSE
+      when Prism::IntegerNode
+        Ast::IntegerLiteral.from(prism_node.value)
+      when Prism::FloatNode
+        Ast::FloatLiteral.from(prism_node.value)
       else
         raise "Unexpected Prism node type #{prism_node.class}"
       end

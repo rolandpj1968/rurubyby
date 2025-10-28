@@ -1,7 +1,7 @@
 module Rurubyby
   module Ast
-    class NilValue
-      NIL = NilValue.new
+    class NilLiteral
+      NIL = NilLiteral.new
 
       def to_s = "nil"
     end
