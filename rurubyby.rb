@@ -4,7 +4,11 @@ require_relative 'lib/rurubyby/vm'
 
 options = {
   verbose: false,
+  scripts: [],
 }
+
+puts "ARGV:"
+puts ARGV
 
 OptionParser.new do |opts|
   opts.banner = "Usage: rurubyby.rb [options]"
@@ -14,8 +18,13 @@ OptionParser.new do |opts|
   end
 
   opts.on("-e SCRIPT", "", "Run a script") do |v|
-    options[:script] = v
+    options[:scripts] << v
   end
-end.parse!
+end.order!
+
+puts "ARGV:"
+puts ARGV
+
+options[:argv] = ARGV
 
 Rurubyby::Vm.new(options).run
