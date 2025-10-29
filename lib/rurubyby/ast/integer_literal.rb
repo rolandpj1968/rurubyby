@@ -7,7 +7,7 @@ module Rurubyby
         @value = value
       end
 
-      def to_s = value.to_s
+      def to_s = "int(#{value})"
 
       def self.from(value)
         raise "IntegerLiteral value must be an Integer not #{value.class}" unless value.is_a?(Integer)

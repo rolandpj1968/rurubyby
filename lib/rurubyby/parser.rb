@@ -10,6 +10,8 @@ require_relative 'ast/float_literal'
 require_relative 'ast/string_literal'
 require_relative 'ast/symbol_literal'
 
+require_relative 'ast/sequence'
+
 module Rurubyby
   class Parser
     attr_reader :text
@@ -40,7 +42,7 @@ module Rurubyby
         when 1
           transform(body[0])
         else
-          raise "Prism::StatementsNode of length > 1 not supported"
+          Ast::Sequence.new(body.map { |pn| transform(pn) })
         end
       when Prism::NilNode
         Ast::NilLiteral::NIL

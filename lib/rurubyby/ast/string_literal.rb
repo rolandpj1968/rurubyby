@@ -7,7 +7,7 @@ module Rurubyby
         @value = value
       end
 
-      def to_s = value.to_s
+      def to_s = "str(#{value})"
 
       def self.from(value)
         raise "StringLiteral value must be an String not #{value.class}" unless value.is_a?(String)

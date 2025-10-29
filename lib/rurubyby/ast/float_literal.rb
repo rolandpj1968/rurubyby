@@ -7,7 +7,7 @@ module Rurubyby
         @value = value
       end
 
-      def to_s = value.to_s
+      def to_s = "float(#{value})"
 
       def self.from(value)
         raise "FloatLiteral value must be an Float not #{value.class}" unless value.is_a?(Float)
