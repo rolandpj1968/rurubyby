@@ -8,7 +8,7 @@ module Rurubyby
         super(Core::FALSE_CLASS_CLASS)
       end
 
-      def to_s = false
+      def to_s = "false"
 
       FALSE_OBJECT = new
     end

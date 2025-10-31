@@ -11,6 +11,8 @@ module Rurubyby
 
       def to_s = "sym(#{value})"
 
+      def eval = @value
+
       # TODO this needs to be hoisted into the VM runtime cos _all_ symbols are deduped, even dynamically created symbols
       # TODO - share with unique strings
       # TODO - thread-safety
