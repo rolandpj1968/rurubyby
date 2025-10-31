@@ -1,3 +1,5 @@
+require_relative '../vm/symbol_object'
+
 module Rurubyby
   module Ast
     class SymbolLiteral
@@ -14,14 +16,12 @@ module Rurubyby
       # TODO - thread-safety
       SymbolLiterals = {}
 
-      class << self
-        def from(value)
-          raise "SymbolLiteral value must be an String not #{value.class}" unless value.is_a?(String)
+      def self.from(value)
+        raise "SymbolLiteral value must be an String not #{value.class}" unless value.is_a?(String)
 
-          # TODO - handle locale encoding
-          symbol = value.to_sym
-          SymbolLiterals[symbol] ||= new(symbol)
-        end
+        # TODO - handle locale encoding
+        symbol = value.to_sym
+        SymbolLiterals[symbol] ||= new(::Rurubyby::Vm::SymbolObject.new(symbol))
       end
     end
   end

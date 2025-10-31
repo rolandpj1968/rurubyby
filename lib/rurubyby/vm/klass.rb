@@ -32,6 +32,7 @@ module Rurubyby
         raise "method must be a method" unless method.class.equal?(Method)
       end
 
+      # TODO - private/public
       def find_method(name)
         # 1. Prepended modules
         unless @prepends.nil?

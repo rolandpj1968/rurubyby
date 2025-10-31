@@ -19,6 +19,10 @@ module Rurubyby
 
       COMPARABLE_MODULE = Module.new(:Comparable, nil)
 
+      TRUE_CLASS_CLASS = Klass.new(:TrueClass, nil, OBJECT_CLASS)
+
+      FALSE_CLASS_CLASS = Klass.new(:FalseClass, nil, OBJECT_CLASS)
+
       STRING_CLASS = Klass.new(:String, nil, OBJECT_CLASS)
       STRING_CLASS.add_module(COMPARABLE_MODULE)
 

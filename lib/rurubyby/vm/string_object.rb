@@ -3,11 +3,11 @@ require_relative 'object'
 
 module Rurubyby
   module Vm
-    class IntegerObject < Object
+    class StringObject < Object
       def initialize(value)
-        raise "IntegerObject must have an Integer value" unless value.class.equal?(Integer)
+        raise "StringObject must have an String value" unless value.class.equal?(String)
 
-        super(Core::INTEGER_CLASS)
+        super(Core::STRING_CLASS)
 
         @value = value
       end
