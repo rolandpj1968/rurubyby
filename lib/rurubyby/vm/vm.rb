@@ -12,7 +12,12 @@ module Rurubyby
 
         scripts = @options[:scripts]
 
-        scripts.each { |script| execute(script) }
+        scripts.each do |script|
+          result = execute(script)
+
+          puts
+          puts "result: #{result}"
+        end
 
         # if -e is present then ruby DOES NOT execute an ARGV file
         # Note: ruby -e 'ARGV.each {|f| load f}' file1.rb file2.rb file3.rb
@@ -21,7 +26,11 @@ module Rurubyby
           file = @options[:argv][0]
           unless file.nil?
             script = File.read(file)
-            execute(script)
+
+            result = execute(script)
+
+            puts
+            puts "result: #{result}"
           end
         end
 
@@ -44,6 +53,8 @@ module Rurubyby
         puts "AST root isa #{ast.class}"
         puts
         puts "AST: #{ast}"
+
+        ast.eval
       end
     end
   end

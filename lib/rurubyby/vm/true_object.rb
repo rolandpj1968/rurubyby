@@ -8,6 +8,8 @@ module Rurubyby
         super(Core::TRUE_CLASS_CLASS)
       end
 
+      def to_s = "true"
+
       TRUE_OBJECT = new
     end
   end
