@@ -24,8 +24,6 @@ module Rurubyby
       end
 
       def find_method(name)
-        puts "Looking in module #{@name} for method #{name}"
-        puts "  methods #{@methods}"
         @methods[name]
       end
     end

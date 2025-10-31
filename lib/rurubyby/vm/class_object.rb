@@ -6,8 +6,9 @@ module Rurubyby
     class ClassObject < ModuleObject
       def initialize(name, namespace, superclass)
         super(name, namespace, Core.class_class)
-        puts "class :#{name} = Core.class_class isa #{Core.class_class.class}"
+
         raise "superclass must be a ClassObject" unless superclass.nil? or superclass.class.equal?(ClassObject)
+
         @superclass = superclass
         @prepends = nil
         @modules = nil
@@ -15,7 +16,6 @@ module Rurubyby
 
       # class "Class" circular depenency band-aid - see core.rb too
       def patch_class_object
-        puts "class :#{@name} = Core.class_class isa #{Core.class_class.class}"
         @class_object = Core.class_class
       end
 
@@ -42,8 +42,6 @@ module Rurubyby
 
       # TODO - private/public
       def find_method(name)
-        puts "Looking in class #{@name} for method #{name}"
-        puts "  methods #{@methods}"
         # 1. Prepended modules
         unless @prepends.nil?
           # TODO check forwards or reverse order here - I _think_ it's forwards which is counter-intuituve
