@@ -1,9 +1,9 @@
 require_relative 'core'
-require_relative 'object'
+require_relative 'object_object'
 
 module Rurubyby
   module Vm
-    class FalseObject < Object
+    class FalseObject < ObjectObject
       def initialize
         super(Core::FALSE_CLASS_CLASS)
       end

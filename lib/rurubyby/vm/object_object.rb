@@ -1,19 +1,18 @@
 module Rurubyby
   module Vm
-    class Object
+    class ObjectObject
       def initialize(klass)
+        raise "ObjectObject klass must be a ClassObject" unless klass.class.equal?(ClassObject)
         @klass = klass
         @instance_variables = {}
         @eigenclass = klass # promoted to singleton class at first singleton method def
       end
 
-      def klass
-        @class
-      end
+      def klass = @klass
 
       def create_singleton_class
         if @eigenclass.equal?(@klass)
-          @eigenclass = Klass.new(name = nil, namespace = nil, klass)
+          @eigenclass = ClassObject.new(name = nil, namespace = nil, klass)
         end
       end
 

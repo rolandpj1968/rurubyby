@@ -1,9 +1,9 @@
 require_relative 'core'
-require_relative 'object'
+require_relative 'object_object'
 
 module Rurubyby
   module Vm
-    class IntegerObject < Object
+    class IntegerObject < ObjectObject
       def initialize(value)
         raise "IntegerObject must have an Integer value" unless value.class.equal?(Integer)
 

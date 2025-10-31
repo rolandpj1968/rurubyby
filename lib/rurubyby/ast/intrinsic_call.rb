@@ -7,7 +7,7 @@ module Rurubyby
       end
 
       def to_s
-        # @method.owner.name is nil???
+        # @method.owner is class's eigenclass??? - not sure how to get the Class name
         "__intrinsic__[#{@method.owner}.#{@method.name}](#{@arg_nodes.map(&:to_s).join('; ')})"
       end
 

@@ -1,9 +1,9 @@
 require_relative 'core'
-require_relative 'object'
+require_relative 'object_object'
 
 module Rurubyby
   module Vm
-    class SymbolObject < Object
+    class SymbolObject < ObjectObject
       def initialize(value)
         raise "SymbolObject must have an Symbol value" unless value.class.equal?(Symbol)
 

@@ -1,9 +1,9 @@
 require_relative 'core'
-require_relative 'object'
+require_relative 'object_object'
 
 module Rurubyby
   module Vm
-    class StringObject < Object
+    class StringObject < ObjectObject
       def initialize(value)
         raise "StringObject must have an String value" unless value.class.equal?(String)
 
@@ -12,7 +12,7 @@ module Rurubyby
         @value = value
       end
 
-      def to_s = @value.to_s
+      def to_s = @value
     end
   end
 end

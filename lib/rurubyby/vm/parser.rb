@@ -61,7 +61,7 @@ module Rurubyby
           Ast::SymbolLiteral.from(prism_node.unescaped)
 
         when Prism::CallNode
-          puts "prism_node method '#{prism_node.name}' isa #{prism_node.name.class}"
+          raise "calls with explicit receiver not handled yet" unless prism_node.receiver.nil?
           if prism_node.name.equal?(:__intrinsic__)
             args = prism_node.arguments.arguments
 
