@@ -1,12 +1,36 @@
-require_relative 'module_object'
+module Rurubyby
+  module Vm
+    module Core
+      def self.class_class = nil
+    end
+  end
+end
+
 require_relative 'class_object'
 
 module Rurubyby
   module Vm
     module Core
-      # TODO - parse these from source code
-
       BASIC_OBJECT_CLASS = ClassObject.new(:BasicObject, nil, nil)
+
+      MODULE_CLASS = ClassObject.new(:Module, nil, BASIC_OBJECT_CLASS)
+
+      CLASS_CLASS = ClassObject.new(:Class, nil, MODULE_CLASS)
+
+      def self.class_class = CLASS_CLASS
+
+      BASIC_OBJECT_CLASS.patch_class_object
+      MODULE_CLASS.patch_class_object
+      CLASS_CLASS.patch_class_object
+    end
+  end
+end
+
+require_relative 'module_object'
+module Rurubyby
+  module Vm
+    module Core
+      # TODO - parse these from source code
 
       KERNEL_MODULE = ModuleObject.new(:Kernel, nil)
       
@@ -14,10 +38,6 @@ module Rurubyby
       OBJECT_CLASS.add_module(KERNEL_MODULE)
 
       NIL_CLASS_CLASS = ClassObject.new(:NilClass, nil, OBJECT_CLASS)
-
-      MODULE_CLASS = ClassObject.new(:Module, nil, BASIC_OBJECT_CLASS)
-
-      CLASS_CLASS = ClassObject.new(:Class, nil, MODULE_CLASS)
 
       COMPARABLE_MODULE = ModuleObject.new(:Comparable, nil)
 

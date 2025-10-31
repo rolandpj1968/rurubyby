@@ -1,14 +1,22 @@
+#require_relative 'core'
 require_relative 'module_object'
 
 module Rurubyby
   module Vm
     class ClassObject < ModuleObject
       def initialize(name, namespace, superclass)
-        super(name, namespace)
+        super(name, namespace, Core.class_class)
+        puts "class :#{name} = Core.class_class isa #{Core.class_class.class}"
         raise "superclass must be a ClassObject" unless superclass.nil? or superclass.class.equal?(ClassObject)
         @superclass = superclass
         @prepends = nil
         @modules = nil
+      end
+
+      # class "Class" circular depenency band-aid - see core.rb too
+      def patch_class_object
+        puts "class :#{@name} = Core.class_class isa #{Core.class_class.class}"
+        @class_object = Core.class_class
       end
 
       def prepend_module(mod)
