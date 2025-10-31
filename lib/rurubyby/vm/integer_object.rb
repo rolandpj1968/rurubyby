@@ -12,7 +12,24 @@ module Rurubyby
         @value = value
       end
 
+      def value = @value
+
       def to_s = @value.to_s
+
+      class << self
+        def check(v)
+          raise 'Intrinsic requires IntegerObject' unless v.class.equal?(IntegerObject)
+          v
+        end
+
+        #
+        # Intrinsics
+        #
+
+        def add(v1, v2)
+          new(check(v1).value + check(v2).value)
+        end
+      end
     end
   end
 end

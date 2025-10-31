@@ -40,6 +40,8 @@ module Rurubyby
         puts "Symbols: #{Ast::SymbolLiteral::SymbolLiterals.transform_values(&:to_s)}"
         puts
         puts "Integers: #{Ast::IntegerLiteral::IntegerLiterals.transform_values(&:to_s)}"
+        puts
+        puts "Intrinsics: #{Ast::IntrinsicCall::Methods.transform_values(&:to_s)}"
       end
 
       private
