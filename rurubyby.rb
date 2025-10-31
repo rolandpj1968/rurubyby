@@ -1,6 +1,6 @@
 require 'optparse'
 
-require_relative 'lib/rurubyby/vm'
+require_relative 'lib/rurubyby/vm/vm'
 
 options = {
   verbose: false,
@@ -27,4 +27,4 @@ puts ARGV
 
 options[:argv] = ARGV
 
-Rurubyby::Vm.new(options).run
+Rurubyby::Vm::Vm.new(options).run

@@ -1,12 +1,35 @@
+require_relative 'module'
+
 module Rurubyby
   module Vm
     class Klass < Module
       def initialize(name, namespace, superclass)
         super(name, namespace)
-        raise "superclass must be a class" unless superclass.nil? or superclass.klass.equal?(Klass)
+        raise "superclass must be a class" unless superclass.nil? or superclass.class.equal?(Klass)
         @superclass = superclass
         @prepends = nil
         @modules = nil
+      end
+
+      def prepend_module(mod)
+        if @prepends.nil?
+          @prepends = [mod]
+        else
+          @prepends << mod
+        end
+      end
+
+      def add_module(mod)
+        if @modules.nil?
+          @modules = [mod]
+        else
+          @modules << mod
+        end
+      end
+        
+      def add_method(name, method)
+        raise "method name must be a symbol" unless name.class.equal?(Symbol)
+        raise "method must be a method" unless method.class.equal?(Method)
       end
 
       def find_method(name)

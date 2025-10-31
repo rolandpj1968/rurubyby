@@ -7,6 +7,10 @@ module Rurubyby
         @eigenclass = klass # promoted to singleton class at first singleton method def
       end
 
+      def klass
+        @class
+      end
+
       def create_singleton_class
         if @eigenclass.equal?(@klass)
           @eigenclass = Klass.new(name = nil, namespace = nil, klass)
