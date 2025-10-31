@@ -1,4 +1,8 @@
+require_relative 'core'
+require_relative 'nil_object'
 require_relative 'parser'
+require_relative 'stack_frame'
+require_relative 'unbound_method_object'
 
 module Rurubyby
   module Vm
@@ -8,6 +12,24 @@ module Rurubyby
       end
 
       def run
+        Core::INTEGER_CLASS.define_method(
+          :+,
+          UnboundMethodObject.new(
+            Core::INTEGER_CLASS,
+            :+,
+            [:v],
+            [:v],
+            Ast::IntrinsicCall.new(
+              '::Rurubyby::Vm::IntegerObject',
+              :add,
+              [
+                Ast::SelfLiteral::SELF,
+                Ast::IntegerLiteral.from(3) #Ast::LocalVariableRead.new(:v)
+              ]
+            )
+          )
+        )
+        
         # TODO - set up top-level environment
 
         scripts = @options[:scripts]
@@ -56,7 +78,11 @@ module Rurubyby
         puts
         puts "AST: #{ast}"
 
-        ast.eval
+        # TODO - top-level object, locals, etc.
+        frame = StackFrame.new(nil, NilObject::NIL_OBJECT, [])
+
+        # TODO - eval is a very bad choice of method name
+        ast.eval(frame)
       end
     end
   end

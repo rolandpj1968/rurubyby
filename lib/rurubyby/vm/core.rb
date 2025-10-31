@@ -27,6 +27,7 @@ module Rurubyby
 end
 
 require_relative 'module_object'
+
 module Rurubyby
   module Vm
     module Core
@@ -36,6 +37,10 @@ module Rurubyby
       
       OBJECT_CLASS = ClassObject.new(:Object, nil, BASIC_OBJECT_CLASS)
       OBJECT_CLASS.add_module(KERNEL_MODULE)
+
+      UNBOUND_METHOD_CLASS = ClassObject.new(:UnboundMethod, nil, OBJECT_CLASS)
+
+      # I think we can only start parsing source code from here...
 
       NIL_CLASS_CLASS = ClassObject.new(:NilClass, nil, OBJECT_CLASS)
 

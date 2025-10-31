@@ -9,11 +9,11 @@ module Rurubyby
         "seq(#{@nodes.map(&:to_s).join('; ')})"
       end
 
-      def eval
+      def eval(frame)
         result = nil
 
         @nodes.each do |node|
-          result = node.eval
+          result = node.eval(frame)
         end
 
         result

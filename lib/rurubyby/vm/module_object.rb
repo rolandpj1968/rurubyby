@@ -5,8 +5,9 @@ module Rurubyby
   module Vm
     class ModuleObject < ObjectObject
       # TODO - the Module class _can_ be subclassed in ruby - need to work out how to deal with that
-      def initialize(name, namespace, klass = Core::MODULE_CLASS)
-        super(klass)
+      def initialize(name, namespace, class_object = Core::MODULE_CLASS)
+        super(class_object)
+
         raise "class/module name must be a symbol" unless name.class.equal?(Symbol)
         @name = name
         raise "class/module namespace must be a module" unless namespace.nil? or namespace.class.equal?(Core.MODULE_CLASS)
@@ -14,7 +15,17 @@ module Rurubyby
         @methods = {}
       end
 
+      # TODO - really bad naming cos of existing method
+      def define_method(name, unbound_method)
+        raise "name must be a Symbol" unless name.class.equal?(Symbol)
+        raise "unbound_method must be an UnboundMethodObject" unless unbound_method.class.equal?(UnboundMethodObject)
+        # TODO thread safety
+        @methods[name] = unbound_method
+      end
+
       def find_method(name)
+        puts "Looking in module #{@name} for method #{name}"
+        puts "  methods #{@methods}"
         @methods[name]
       end
     end

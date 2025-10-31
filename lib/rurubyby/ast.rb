@@ -11,3 +11,4 @@ require_relative 'ast/symbol_literal'
 require_relative 'ast/sequence'
 
 require_relative 'ast/intrinsic_call'
+require_relative 'ast/method_call'

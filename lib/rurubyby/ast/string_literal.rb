@@ -11,7 +11,7 @@ module Rurubyby
 
       def to_s = "str(#{value})"
 
-      def eval = @value.dup
+      def eval(_) = @value.dup
 
       # TODO - share with symbols
       # TODO - thread-safety

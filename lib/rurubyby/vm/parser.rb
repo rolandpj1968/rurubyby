@@ -61,8 +61,9 @@ module Rurubyby
           Ast::SymbolLiteral.from(prism_node.unescaped)
 
         when Prism::CallNode
-          raise "calls with explicit receiver not handled yet" unless prism_node.receiver.nil?
+          # TODO - only when parsing core files
           if prism_node.name.equal?(:__intrinsic__)
+            raise "__intrinsic__ calls cannot have an explicit receiver" unless prism_node.receiver.nil?
             args = prism_node.arguments.arguments
 
             raise "__intrinsic__ call must include class name and method" unless args.length >= 2
@@ -71,7 +72,9 @@ module Rurubyby
 
             Ast::IntrinsicCall.new(args[0].unescaped, args[1].unescaped.to_sym, args[2..].map { |pn| transform(pn) })
           else
-            raise "non-intrinsic calls not yet handled"
+            receiver_node = prism_node.receiver.nil? ? nil : transform(prism_node.receiver)
+
+            Ast::MethodCall.new(prism_node.name, receiver_node, prism_node.arguments.arguments.map { |pn| transform(pn) })
           end
         else
           raise "Unexpected Prism node type #{prism_node.class}"

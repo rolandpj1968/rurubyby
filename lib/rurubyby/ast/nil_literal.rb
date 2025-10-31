@@ -4,6 +4,8 @@ module Rurubyby
       NIL = NilLiteral.new
 
       def to_s = "nil"
+
+      def eval(_) = ::Rurubyby::Vm::NilObject::NIL_OBJECT
     end
   end
 end

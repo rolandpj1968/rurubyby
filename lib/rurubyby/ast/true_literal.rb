@@ -7,7 +7,7 @@ module Rurubyby
 
       def to_s = "true"
 
-      def eval = ::Rurubyby::Vm::TrueObject::TRUE_OBJECT
+      def eval(_) = ::Rurubyby::Vm::TrueObject::TRUE_OBJECT
     end
   end
 end

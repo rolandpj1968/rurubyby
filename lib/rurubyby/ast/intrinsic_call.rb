@@ -11,8 +11,8 @@ module Rurubyby
         "__intrinsic__[#{@method.owner}.#{@method.name}](#{@arg_nodes.map(&:to_s).join('; ')})"
       end
 
-      def eval
-        args = @arg_nodes.map(&:eval)
+      def eval(frame)
+        args = @arg_nodes.map { |arg_node| arg_node.eval(frame) }
 
         @method.call(*args)
       end
