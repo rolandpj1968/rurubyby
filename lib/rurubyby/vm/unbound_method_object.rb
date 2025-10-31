@@ -31,7 +31,7 @@ module Rurubyby
       # TODO default args, keyword args, block param
       def invoke(frame, args)
         # TODO - this is a runtime error, not an intrinsic error
-        raise "too few arguments" if args.length < @params.length
+        raise "wrong number of arguments (given #{args.length} expecting #{params.length})" if args.length < @params.length
 
         @params.length.times do |i|
           frame.set_local(@params[i], args[i])

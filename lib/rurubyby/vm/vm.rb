@@ -24,7 +24,7 @@ module Rurubyby
               :add,
               [
                 Ast::SelfLiteral::SELF,
-                Ast::IntegerLiteral.from(3) #Ast::LocalVariableRead.new(:v)
+                Ast::LocalVariableRead.new(:v, 3)
               ]
             )
           )

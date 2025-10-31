@@ -60,6 +60,9 @@ module Rurubyby
         when Prism::SymbolNode
           Ast::SymbolLiteral.from(prism_node.unescaped)
 
+        when Prism::LocalVariableReadNode
+          Ast::LocalVariableReadNode.new(prism_node.name)
+
         when Prism::CallNode
           # TODO - only when parsing core files
           if prism_node.name.equal?(:__intrinsic__)
