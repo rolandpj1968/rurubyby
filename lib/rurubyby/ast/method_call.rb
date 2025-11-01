@@ -22,7 +22,7 @@ module Rurubyby
       
         args = @arg_nodes.map { |arg_node| arg_node.execute(frame) }
 
-        method = receiver.find_method(@method_name)
+        method = receiver.lookup_method(@method_name)
 
         raise "method not found - not yet doing missing_method" if method.nil?
 

@@ -41,12 +41,12 @@ module Rurubyby
       end
 
       # TODO - private/public
-      def find_method(name)
+      def lookup_method(name)
         # 1. Prepended modules
         unless @prepends.nil?
           # TODO check forwards or reverse order here - I _think_ it's forwards which is counter-intuituve
           @prepends.each do |mod|
-            method = mod.find_method(name)
+            method = mod.lookup_method(name)
             return method unless method.nil?
           end
         end
@@ -58,14 +58,14 @@ module Rurubyby
         # 3. Module methods
         unless @modules.nil?
           @modules.each do |mod|
-            method = mod.find_method(name)
+            method = mod.lookup_method(name)
             return method unless method.nil?
           end
         end
 
         # 4. Superclass
         unless @superclass.nil?
-          method = @superclass.find_method(name)
+          method = @superclass.lookup_method(name)
           return method unless method.nil?
         end
 

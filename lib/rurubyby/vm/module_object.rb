@@ -23,7 +23,7 @@ module Rurubyby
         @methods[name] = unbound_method
       end
 
-      def find_method(name)
+      def lookup_method(name)
         @methods[name]
       end
     end

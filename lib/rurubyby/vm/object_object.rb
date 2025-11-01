@@ -23,8 +23,8 @@ module Rurubyby
         @eigenclass.define_method(name, method)
       end
 
-      def find_method(name)
-        @eigenclass.find_method(name)
+      def lookup_method(name)
+        @eigenclass.lookup_method(name)
       end
     end
   end
