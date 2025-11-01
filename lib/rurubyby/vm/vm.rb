@@ -1,7 +1,11 @@
 require_relative 'core'
-require_relative 'nil_object'
+
 require_relative 'parser'
-require_relative 'stack_frame'
+
+require_relative 'context'
+require_relative 'frame'
+
+require_relative 'nil_object'
 require_relative 'unbound_method_object'
 
 module Rurubyby
@@ -32,31 +36,27 @@ module Rurubyby
           )
         )
 
-        # TODO - set up top-level environment
-
         scripts = @options[:scripts]
-
-        scripts.each do |script|
-          result = execute(script)
-
-          puts
-          puts "result: #{result}"
-        end
 
         # if -e is present then ruby DOES NOT execute an ARGV file
         # Note: ruby -e 'ARGV.each {|f| load f}' file1.rb file2.rb file3.rb
-        if scripts.empty?
-          # if -e is absent then ruby executes the FIRST file only
-          file = @options[:argv][0]
-          unless file.nil?
-            script = File.read(file)
-
-            result = execute(script)
-
-            puts
-            puts "result: #{result}"
+        program =
+          if scripts.empty?
+            # if -e is absent then ruby executes the FIRST file only
+            file = @options[:argv][0]
+            file.nil? ? "" : File.read(file)
+          else
+            # if multiple -e scripts are present, ruby simply joins them with \n, and parses together
+            #   ruby -e 'puts 3; class A' -e 'end; puts 4'
+            #   ruby -e 'puts "ha' -e 'llo"'
+            #   ruby -e 'puts 3' -e '@%@#$%@'
+            scripts.join("\n")
           end
-        end
+
+        result = execute(program)
+
+        puts
+        puts "result: #{result}"
 
         puts
         puts "Strings: #{Ast::StringLiteral::StringLiterals.transform_values(&:to_s)}"
@@ -82,9 +82,16 @@ module Rurubyby
 
         # TODO - top-level object, locals, etc.
         # Note: top-level object and state are shared for all scripts
-        frame = StackFrame.new(nil, NilObject::NIL_OBJECT, [])
+        top_level_scope = Core::OBJECT_CLASS
+        top_level_object = ObjectObject.new(Core::OBJECT_CLASS)
 
-        ast.execute(frame)
+        context = Context.new
+
+        frame = Frame.new(top_level_object, [], [top_level_scope])
+        context.push_frame(frame)
+        context.push_scope(top_level_scope)
+        
+        ast.execute(context)
       end
     end
   end

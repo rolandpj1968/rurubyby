@@ -12,21 +12,21 @@ module Rurubyby
         "call(TODO)"
       end
 
-      def execute(frame)
+      def execute(context)
         receiver =
           if @receiver_node.nil?
             frame.the_self
           else
-            @receiver_node.execute(frame)
+            @receiver_node.execute(context)
           end
       
-        args = @arg_nodes.map { |arg_node| arg_node.execute(frame) }
+        args = @arg_nodes.map { |arg_node| arg_node.execute(context) }
 
         method = receiver.lookup_method(@method_name)
 
         raise "method not found - not yet doing missing_method" if method.nil?
 
-        new_frame = Vm::StackFrame.new(frame, receiver, method.locals)
+        new_frame = Vm::Frame.new(frame, receiver, method.locals)
 
         method.invoke(new_frame, args)
       end

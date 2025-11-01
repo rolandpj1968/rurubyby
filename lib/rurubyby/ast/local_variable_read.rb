@@ -14,7 +14,7 @@ module Rurubyby
       def to_s = "local(#{@local})"
 
       # TODO depth
-      def execute(frame) = frame.get_local(@local)
+      def execute(context) = frame.get_local(@local)
     end
   end
 end

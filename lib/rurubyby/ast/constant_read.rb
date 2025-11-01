@@ -14,7 +14,7 @@ module Rurubyby
       def to_s = "con(#{@name})"
 
       # TODO hack for now - we need lexical scope
-      def execute(frame) = Vm::Core::OBJECT_CLASS.lookup_constant(@name)
+      def execute(context) = Vm::Core::OBJECT_CLASS.lookup_constant(@name)
     end
   end
 end
