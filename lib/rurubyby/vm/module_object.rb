@@ -16,7 +16,7 @@ module Rurubyby
       end
 
       # TODO - really bad naming cos of existing method
-      def define_method(name, unbound_method)
+      def set_method(name, unbound_method)
         raise "name must be a Symbol" unless name.class.equal?(Symbol)
         raise "unbound_method must be an UnboundMethodObject" unless unbound_method.class.equal?(UnboundMethodObject)
         # TODO thread safety

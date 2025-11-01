@@ -14,13 +14,15 @@ module Rurubyby
 
       def create_singleton_class
         if @eigenclass.equal?(@class_object)
+          # TODO - the namespace is probs the same as for this Object? Will affect constant lookup order etc.
           @eigenclass = ClassObject.new(name = nil, namespace = nil, class_object)
         end
       end
 
-      def define_singleton_method(name, method)
+      # TODO - this is probs not necessary cos eigenclass will be created first
+      def define_singleton_method(name, unbound_method)
         create_singleton_class
-        @eigenclass.define_method(name, method)
+        @eigenclass.set_method(name, unbound_method)
       end
 
       def lookup_method(name)

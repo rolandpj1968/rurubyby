@@ -12,7 +12,7 @@ module Rurubyby
       end
 
       def run
-        Core::INTEGER_CLASS.define_method(
+        Core::INTEGER_CLASS.set_method(
           :+,
           UnboundMethodObject.new(
             Core::INTEGER_CLASS,

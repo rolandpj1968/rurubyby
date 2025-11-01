@@ -35,11 +35,6 @@ module Rurubyby
         end
       end
         
-      def add_method(name, method)
-        raise "method name must be a symbol" unless name.class.equal?(Symbol)
-        raise "method must be a method" unless method.class.equal?(Method) # TODO
-      end
-
       # TODO - private/public
       def lookup_method(name)
         # 1. Prepended modules
