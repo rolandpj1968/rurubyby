@@ -6,12 +6,12 @@ module Rurubyby
     # Mmm, do we want to objectify this for all methods?
     class UnboundMethodObject < ObjectObject
       # TODO - default params, keyword params, block param
-      def initialize(class_or_module_object, name, params, locals, ast)
+      def initialize(owner, name, params, locals, ast)
         super(Core::UNBOUND_METHOD_CLASS)
 
         # TODO Module class _can_ be subclassed - unlike Class class
-        unless class_or_module_object.class.equal?(ClassObject) || class_or_module_object.class.equal?(ModuleObject)
-          raise "UnboundMethodObject class_or_module must be ClassObject or ModuleObject"
+        unless owner.class.equal?(ClassObject) || owner.class.equal?(ModuleObject)
+          raise "UnboundMethodObject owner must be ClassObject or ModuleObject"
         end
         raise "name must be a Symbol" unless name.class.equal?(Symbol)
         # TODO - array of symbols
@@ -19,7 +19,7 @@ module Rurubyby
         # TODO - array of symbols
         raise "locals must be an array of Symbols" unless locals.class.equal?(Array)
 
-        @class_or_module_object = class_or_module_object
+        @owner = owner
         @name = name
         @params = params
         @locals = locals
@@ -32,6 +32,10 @@ module Rurubyby
       def invoke(frame, args)
         # TODO - this is a runtime error, not an intrinsic error
         raise "wrong number of arguments (given #{args.length} expecting #{params.length})" if args.length < @params.length
+
+        @locals.length.times do |i|
+          frame.set_local(@locals[i], NilObject::NIL_OBJECT)
+        end
 
         @params.length.times do |i|
           frame.set_local(@params[i], args[i])
