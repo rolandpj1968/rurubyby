@@ -12,15 +12,15 @@ module Rurubyby
         "call(TODO)"
       end
 
-      def eval(frame)
+      def execute(frame)
         receiver =
           if @receiver_node.nil?
             frame.the_self
           else
-            @receiver_node.eval(frame)
+            @receiver_node.execute(frame)
           end
       
-        args = @arg_nodes.map { |arg_node| arg_node.eval(frame) }
+        args = @arg_nodes.map { |arg_node| arg_node.execute(frame) }
 
         method = receiver.find_method(@method_name)
 

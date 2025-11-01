@@ -7,7 +7,7 @@ module Rurubyby
 
       def to_s = "false"
 
-      def eval(_) = ::Rurubyby::Vm::FalseObject::FALSE_OBJECT
+      def execute(_) = ::Rurubyby::Vm::FalseObject::FALSE_OBJECT
     end
   end
 end

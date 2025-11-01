@@ -79,10 +79,10 @@ module Rurubyby
         puts "AST: #{ast}"
 
         # TODO - top-level object, locals, etc.
+        # Note: top-level object and state are shared for all scripts
         frame = StackFrame.new(nil, NilObject::NIL_OBJECT, [])
 
-        # TODO - eval is a very bad choice of method name
-        ast.eval(frame)
+        ast.execute(frame)
       end
     end
   end

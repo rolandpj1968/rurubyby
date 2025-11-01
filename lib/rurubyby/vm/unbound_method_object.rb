@@ -37,7 +37,7 @@ module Rurubyby
           frame.set_local(@params[i], args[i])
         end
 
-        @ast.eval(frame)
+        @ast.execute(frame)
       end
     end
   end

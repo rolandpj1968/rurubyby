@@ -5,7 +5,7 @@ module Rurubyby
 
       def to_s = "self"
 
-      def eval(frame) = frame.the_self
+      def execute(frame) = frame.the_self
     end
   end
 end

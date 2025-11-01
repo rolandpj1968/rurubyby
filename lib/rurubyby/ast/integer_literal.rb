@@ -12,7 +12,7 @@ module Rurubyby
 
       def to_s = "int(#{value})"
 
-      def eval(_) = @value
+      def execute(_) = @value
 
       # TODO - thread-safety
       IntegerLiterals = {}

@@ -5,7 +5,7 @@ module Rurubyby
 
       def to_s = "nil"
 
-      def eval(_) = ::Rurubyby::Vm::NilObject::NIL_OBJECT
+      def execute(_) = ::Rurubyby::Vm::NilObject::NIL_OBJECT
     end
   end
 end
