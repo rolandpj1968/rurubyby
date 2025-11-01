@@ -61,7 +61,10 @@ module Rurubyby
           Ast::SymbolLiteral.from(prism_node.unescaped)
 
         when Prism::LocalVariableReadNode
-          Ast::LocalVariableReadNode.new(prism_node.name)
+          Ast::LocalVariableRead.new(prism_node.name, prism_node.depth)
+
+        when Prism::ConstantReadNode
+          Ast::ConstantRead.new(prism_node.name)
 
         when Prism::CallNode
           # TODO - only when parsing core files

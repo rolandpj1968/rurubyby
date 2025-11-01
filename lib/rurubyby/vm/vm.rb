@@ -12,6 +12,8 @@ module Rurubyby
       end
 
       def run
+        Core::OBJECT_CLASS.set_constant(:RUBY_VERSION, Ast::StringLiteral.from('3.4.1'))
+
         Core::INTEGER_CLASS.set_method(
           :+,
           UnboundMethodObject.new(
@@ -29,7 +31,7 @@ module Rurubyby
             )
           )
         )
-        
+
         # TODO - set up top-level environment
 
         scripts = @options[:scripts]
