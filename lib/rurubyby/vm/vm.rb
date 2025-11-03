@@ -21,7 +21,8 @@ module Rurubyby
         Core::INTEGER_CLASS.set_method(
           :+,
           UnboundMethodObject.new(
-            Core::INTEGER_CLASS,
+            Core::INTEGER_CLASS, # owner
+            [Core::INTEGER_CLASS], # scopes
             :+,
             [:v],
             [:v],

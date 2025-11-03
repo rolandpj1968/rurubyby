@@ -24,11 +24,16 @@ module Rurubyby
 
         method = receiver.lookup_method(@method_name)
 
+        # TODO - this is a runtime exception, not an assert
         raise "method not found - not yet doing missing_method" if method.nil?
 
-        new_frame = Vm::Frame.new(frame, receiver, method.locals)
-
-        method.invoke(new_frame, args)
+        new_frame = Vm::Frame.new(receiver, method.locals, method.scopes)
+        context.push_frame(new_frame)
+        begin
+          method.invoke(context, args)
+        ensure
+          context.pop_frame
+        end
       end
     end
   end

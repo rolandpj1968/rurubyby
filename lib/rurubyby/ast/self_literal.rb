@@ -5,7 +5,7 @@ module Rurubyby
 
       def to_s = "self"
 
-      def execute(context) = frame.the_self
+      def execute(context) = context.frame.the_self
     end
   end
 end
