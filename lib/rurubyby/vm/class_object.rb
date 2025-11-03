@@ -70,22 +70,9 @@ module Rurubyby
         nil
       end
 
+      # Class-hierarchy look-up
+      # Note that full constant lookup starts with the lexical scopes in ModuleObject.lookup_constant.
       def lookup_constant(name)
-        raise "name must be a Symbol" unless name.class.equal?(Symbol)
-
-        # 1. Lexical scope - TODO brokken, see ModuleObject#lookup_constant_in_lexical_scope
-        constant = lookup_constant_in_lexical_scope(name)
-        return constant unless constant.nil?
-
-        # 2. Class hierarchy
-        constant = lookup_constant_in_hierarchy(name)
-        return constant unless constant.nil?
-
-        # 5.fail - missing_constant and raise are done by the VM
-        nil
-      end
-
-      def lookup_constant_in_hierarchy(name)
         # 1. Prepended modules
         unless @prepends.nil?
           # TODO check forwards or reverse order here - I _think_ it's forwards which is counter-intuituve

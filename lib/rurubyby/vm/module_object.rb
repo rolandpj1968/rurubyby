@@ -10,8 +10,7 @@ module Rurubyby
 
         raise "class/module name must be a symbol" unless name.class.equal?(Symbol)
         @name = name
-        # TODO - enclosing module CAN be a class!!!
-        raise "class/module namespace must be a module" unless namespace.nil? or namespace.class.equal?(Core.MODULE_CLASS)
+        raise "class/module namespace must be a module" unless namespace.nil? or namespace.class.equal?(Core.MODULE_CLASS) or namespace.class.equal?(Core.CLASS_CLASS)
         @namespace = namespace
         @methods = {}
         @constants = {}
@@ -41,22 +40,21 @@ module Rurubyby
         @constants[name]
       end
 
-      # TODO brokken - lexical scope is NOT the same as enclosing module/class!!!
-      def lookup_constant_in_lexical_scope(name)
-        raise "name must be a Symbol" unless name.class.equal?(Symbol)
-
-        # 1. This module
-        value = @constants[name]
-        return value unless value.nil?
-
-        # 2. Lexical scope
-        # TODO - this is wrong!!! lexical scope is NOT the same as enclosing module/class!!!
-        unless @namespace.nil?
-          value = @namespace.lookup_constant(name)
-          return value unless value.nil?
+      def self.lookup_constant(name, scopes)
+        # 1. Lexical scopes - not they're in reverse order of priority
+        scopes.reverse_each do |class_or_module|
+          constant = class_or_module.get_constant(name)
+          return constant unless constant.nil?
         end
 
-        # 5.fail - missing_constant and raise are done by the VM
+        # 2. Class hierarchy look-up
+        class_or_module = scopes.last
+        if class_or_module.class.equal?(ClassObject)
+          constant = class_or_module.lookup_constant(name)
+          return constant unless constant.nil?
+        end
+
+        # 3. No luck - Vm will try missing_const or else raise
         nil
       end
     end

@@ -90,4 +90,34 @@ puts "Class6::C is #{Class6::C}"   # -> Class6::C is Prep6::C
 
 # ---
 
-puts "Class6::C::Bogus is #{Class6::C::Bogus}" # -> "Prep6::C" is not a class/module (TypeError)
+#puts "Class6::C::Bogus is #{Class6::C::Bogus}" # -> "Prep6::C" is not a class/module (TypeError)
+
+# ---
+
+class Class7
+  C = "Class7::C"
+
+  class ::Class8
+    def c = C
+  end
+end
+
+puts "Class8#c is #{Class8.new.c}" # -> Class8#c is Class7::C - lexical scope
+
+#puts "Class8::C is #{Class8::C}"  # -> uninitialized constant Class8::C (NameError)
+
+module Mod9
+  C = "Mod9::C"
+end
+
+class Class9
+  include Mod9
+
+  class ::Class10
+    def c = C
+  end
+end
+
+#puts "Class10#c is #{Class10.new.c}" # -> uninitialized constant Class10::C (NameError) - lexical scope doesn't look in included modules
+
+#puts "Class10::C is #{Class10::C}"   # -> uninitialized constant Class10::C (NameError)
