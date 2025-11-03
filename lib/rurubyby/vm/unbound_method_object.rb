@@ -31,20 +31,11 @@ module Rurubyby
 
       def scopes = @scopes
 
+      def params = @params
+
       def locals = @locals
 
-      # TODO default args, keyword args, block param
-      def invoke(context, args)
-        # TODO - this is a runtime error, not an intrinsic error
-        raise "wrong number of arguments (given #{args.length} expecting #{params.length})" if args.length < @params.length
-
-        frame = context.frame
-        @params.length.times do |i|
-          frame.set_local(@params[i], args[i])
-        end
-
-        @ast.execute(context)
-      end
+      def ast = @ast
 
       # TODO - thread-safety
       UniqueScopes = {}

@@ -8,7 +8,7 @@ module Rurubyby
           @locals[local] = NilObject::NIL_OBJECT
         end
         @the_self = the_self
-        @scope = scope
+        @scopes = scopes
       end
 
       def the_self = @the_self
@@ -19,7 +19,7 @@ module Rurubyby
         @locals[local] = value
       end
 
-      def scope = @scope
+      def scopes = @scopes
     end
   end
 end

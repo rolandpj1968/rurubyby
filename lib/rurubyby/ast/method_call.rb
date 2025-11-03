@@ -28,9 +28,19 @@ module Rurubyby
         raise "method not found - not yet doing missing_method" if method.nil?
 
         new_frame = Vm::Frame.new(receiver, method.locals, method.scopes)
+
+        params = method.params
+
+        # TODO - this is a runtime error, not an intrinsic error
+        raise "wrong number of arguments (given #{args.length} expecting #{params.length})" if args.length < params.length
+
+        params.length.times do |i|
+          new_frame.set_local(params[i], args[i])
+        end
+
         context.push_frame(new_frame)
         begin
-          method.invoke(context, args)
+          method.ast.execute(context)
         ensure
           context.pop_frame
         end
