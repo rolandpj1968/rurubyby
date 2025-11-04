@@ -13,6 +13,7 @@ require_relative 'ast/sequence'
 require_relative 'ast/local_variable_read'
 
 require_relative 'ast/constant_read'
+require_relative 'ast/constant_write'
 
 require_relative 'ast/intrinsic_call'
 require_relative 'ast/method_call'

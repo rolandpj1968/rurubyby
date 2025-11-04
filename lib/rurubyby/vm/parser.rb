@@ -66,6 +66,9 @@ module Rurubyby
         when Prism::ConstantReadNode
           Ast::ConstantRead.new(prism_node.name)
 
+        when Prism::ConstantWriteNode
+          Ast::ConstantWrite.new(prism_node.name, transform(prism_node.value))
+
         when Prism::CallNode
           # TODO - only when parsing core files
           if prism_node.name.equal?(:__intrinsic__)
