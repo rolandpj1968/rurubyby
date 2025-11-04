@@ -69,6 +69,11 @@ module Rurubyby
         when Prism::ConstantWriteNode
           Ast::ConstantWrite.new(prism_node.name, transform(prism_node.value))
 
+        when Prism::DefNode
+          raise "singleton/receiver method defs not handled yet" unless prism_node.receiver.nil?
+          raise "no idea what locals_body_index is" unless prism_node.locals_body_index.equal?(0)
+          raise "OK, so far so good"
+
         when Prism::CallNode
           # TODO - only when parsing core files
           if prism_node.name.equal?(:__intrinsic__)

@@ -4,9 +4,9 @@ require_relative 'parser'
 
 require_relative 'context'
 require_relative 'frame'
+require_relative 'method'
 
 require_relative 'nil_object'
-require_relative 'unbound_method_object'
 
 module Rurubyby
   module Vm
@@ -20,8 +20,7 @@ module Rurubyby
 
         Core::INTEGER_CLASS.set_method(
           :+,
-          UnboundMethodObject.new(
-            Core::INTEGER_CLASS, # owner
+          Method.new(
             [Core::INTEGER_CLASS], # scopes
             :+,
             [:v],

@@ -1,15 +1,15 @@
 module Rurubyby
   module Ast
     class MethodCall
-      def initialize(method_name, receiver_node, arg_nodes)
-        raise "method_name must be a Symbol" unless method_name.class.equal?(Symbol)
-        @method_name = method_name
+      def initialize(name, receiver_node, arg_nodes)
+        raise "name must be a Symbol" unless name.class.equal?(Symbol)
+        @name = name
         @receiver_node = receiver_node # nil if no explicit receiver
         @arg_nodes = arg_nodes
       end
 
       def to_s
-        "call(#{method_name}, TODO)"
+        "call(#{@name}, TODO)"
       end
 
       def execute(context)
@@ -22,7 +22,7 @@ module Rurubyby
       
         args = @arg_nodes.map { |arg_node| arg_node.execute(context) }
 
-        method = receiver.lookup_method(@method_name)
+        method = receiver.lookup_method(@name)
 
         # TODO - this is a runtime exception, not an assert
         raise "method not found - not yet doing missing_method" if method.nil?

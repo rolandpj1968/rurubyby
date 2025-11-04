@@ -1,4 +1,5 @@
 require_relative 'core'
+require_relative 'method'
 require_relative 'object_object'
 
 module Rurubyby
@@ -18,10 +19,10 @@ module Rurubyby
 
       def to_s = "module #{@name}"
 
-      def set_method(name, unbound_method)
-        raise "unbound_method must be an UnboundMethodObject" unless unbound_method.class.equal?(UnboundMethodObject)
+      def set_method(name, method)
+        raise "method must be an Method" unless method.class.equal?(Method)
         # TODO thread safety
-        @methods[name] = unbound_method
+        @methods[name] = method
       end
 
       def get_method(name)

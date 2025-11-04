@@ -85,10 +85,6 @@ module Rurubyby
 
       FLOAT_CLASS = ClassObject.new(:Float, nil, NUMERIC_CLASS)
       OBJECT_CLASS.set_constant(:Float, FLOAT_CLASS)
-
-      # still not sure we should objectify all methods?
-      UNBOUND_METHOD_CLASS = ClassObject.new(:UnboundMethod, nil, OBJECT_CLASS)
-      OBJECT_CLASS.set_constant(:UnboundMethod, UNBOUND_METHOD_CLASS)
     end
   end
 end

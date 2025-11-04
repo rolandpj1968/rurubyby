@@ -1,18 +1,8 @@
-require_relative 'core'
-require_relative 'object_object'
-
 module Rurubyby
   module Vm
-    # Mmm, do we want to objectify this for all methods?
-    class UnboundMethodObject < ObjectObject
+    class Method
       # TODO - default params, keyword params, block param
-      def initialize(owner, scopes, name, params, locals, ast)
-        super(Core::UNBOUND_METHOD_CLASS)
-
-        # TODO Module class _can_ be subclassed - unlike Class class
-        unless owner.class.equal?(ClassObject) || owner.class.equal?(ModuleObject)
-          raise "UnboundMethodObject owner must be ClassObject or ModuleObject"
-        end
+      def initialize(scopes, name, params, locals, ast)
         # TODO - array of class/modules
         raise "scopes must be an array of ClassObjects/ModuleObjects" unless scopes.class.equal?(Array)
         raise "name must be a Symbol" unless name.class.equal?(Symbol)
@@ -21,8 +11,7 @@ module Rurubyby
         # TODO - array of symbols
         raise "locals must be an array of Symbols" unless locals.class.equal?(Array)
 
-        @owner = owner
-        @scopes = UnboundMethodObject.unique_scopes(scopes)
+        @scopes = Method.unique_scopes(scopes)
         @name = name
         @params = params
         @locals = locals
@@ -41,8 +30,7 @@ module Rurubyby
       UniqueScopes = {}
 
       def self.unique_scopes(scopes)
-        scopes = scopes.dup
-        UniqueScopes[scopes] ||= scopes
+        UniqueScopes[scopes] ||= scopes.dup
       end
     end
   end
