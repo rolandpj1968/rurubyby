@@ -121,3 +121,17 @@ end
 #puts "Class10#c is #{Class10.new.c}" # -> uninitialized constant Class10::C (NameError) - lexical scope doesn't look in included modules
 
 #puts "Class10::C is #{Class10::C}"   # -> uninitialized constant Class10::C (NameError)
+
+module Mod11
+  def c = C
+end
+
+class Class11
+  include Mod11
+
+  C = "Class11::C"
+end
+
+# puts "Class11#c is #{Class11.new.c}" # -> uninitialized constant Mod11::C (NameError)
+
+puts "Class11::C is #{Class11::C}"   # -> Class11::C is Class11::C (duh)

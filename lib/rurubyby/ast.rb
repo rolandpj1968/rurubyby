@@ -16,3 +16,5 @@ require_relative 'ast/constant_read'
 
 require_relative 'ast/intrinsic_call'
 require_relative 'ast/method_call'
+
+require_relative 'ast/class_def'

@@ -82,6 +82,23 @@ module Rurubyby
 
             Ast::MethodCall.new(prism_node.name, receiver_node, prism_node.arguments.arguments.map { |pn| transform(pn) })
           end
+
+        when Prism::ClassNode
+          # Prism seems a bit weird - it successfully parses class defns where the class name can be an arbitrary expression
+          #   prehaps looking to the future?
+          unless prism_node.constant_path.class.equal?(Prism::ConstantReadNode)
+            raise "class defs with nested namespaced paths are not yet implemented"
+          end
+          unless prism_node.constant_path.name.class.equal?(Symbol) and prism_node.constant_path.name.equal?(prism_node.name)
+            raise "Prism or RPJ or both are confused"
+          end
+          # TODO - disappointing that we need to use upcase here
+          unless prism_node.name.length > 0 && prism_node.name[0].upcase == prism_node.name[0]
+            # TODO - this is a real runtime error
+            raise "class name '#{prism_node.name} is not a valid constant name"
+          end
+          body_ast = transform(prism_node.ast) unless prism_node.body.nil?
+          Ast::ClassDef.new(prism_node.name, prism_node.locals, body_ast)
         else
           raise "Unexpected Prism node type #{prism_node.class}"
         end

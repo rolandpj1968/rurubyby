@@ -9,7 +9,7 @@ module Rurubyby
       end
 
       def to_s
-        "call(TODO)"
+        "call(#{method_name}, TODO)"
       end
 
       def execute(context)
