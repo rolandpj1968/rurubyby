@@ -16,6 +16,8 @@ module Rurubyby
         @constants = {}
       end
 
+      def to_s = "module #{@name}"
+
       def set_method(name, unbound_method)
         raise "unbound_method must be an UnboundMethodObject" unless unbound_method.class.equal?(UnboundMethodObject)
         # TODO thread safety

@@ -14,6 +14,8 @@ module Rurubyby
         @modules = nil
       end
 
+      def to_s = "class #{@name}"
+
       # class "Class" circular depenency band-aid - see core.rb too
       def patch_class_object
         @class_object = Core.class_class
@@ -34,7 +36,7 @@ module Rurubyby
           @modules << mod
         end
       end
-        
+
       # TODO - private/public
       def lookup_method(name)
         raise "name must be a Symbol" unless name.class.equal?(Symbol)
