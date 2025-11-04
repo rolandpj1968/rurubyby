@@ -1,5 +1,4 @@
-# TODO - remove
-require_relative '../vm/core'
+require_relative '../vm/module_object'
 
 module Rurubyby
   module Ast
@@ -13,7 +12,6 @@ module Rurubyby
 
       def to_s = "con(#{@name})"
 
-      # TODO hack for now - we need lexical scope
       def execute(context) = Vm::ModuleObject.lookup_constant(@name, context.scopes)
     end
   end
