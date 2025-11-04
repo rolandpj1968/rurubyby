@@ -24,7 +24,7 @@ module Rurubyby
         # 1. find or create the class defn and constant
         class_constant = Vm::ModuleObject.lookup_constant(@name, context.scopes)
         puts "previous constant #{class_constant}/#{class_constant.class}"
-        unless class_constant.nil? or class_constant.class.equal?(Vm::Core::CLASS_CLASS)
+        unless class_constant.nil? or class_constant.class.equal?(Vm::ClassObject)
           # this is a real runtime error, not an assert
           raise "previous defn of #{@name} was not a class"
         end

@@ -12,6 +12,7 @@ module Rurubyby
   module Vm
     module Core
       BASIC_OBJECT_CLASS = ClassObject.new(:BasicObject, nil, nil)
+      BASIC_OBJECT_CLASS.set_constant(:BasicObject, BASIC_OBJECT_CLASS)
 
       MODULE_CLASS = ClassObject.new(:Module, nil, BASIC_OBJECT_CLASS)
 
@@ -37,6 +38,9 @@ module Rurubyby
       
       OBJECT_CLASS = ClassObject.new(:Object, nil, BASIC_OBJECT_CLASS)
       OBJECT_CLASS.add_module(KERNEL_MODULE)
+      OBJECT_CLASS.set_constant(:BasicObject, BASIC_OBJECT_CLASS)
+      OBJECT_CLASS.set_constant(:Kernel, KERNEL_MODULE)
+      OBJECT_CLASS.set_constant(:Object, OBJECT_CLASS)
 
       UNBOUND_METHOD_CLASS = ClassObject.new(:UnboundMethod, nil, OBJECT_CLASS)
 
