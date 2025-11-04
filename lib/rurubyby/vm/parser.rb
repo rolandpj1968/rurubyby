@@ -92,6 +92,9 @@ module Rurubyby
           unless prism_node.constant_path.name.class.equal?(Symbol) and prism_node.constant_path.name.equal?(prism_node.name)
             raise "Prism or RPJ or both are confused"
           end
+          unless prism_node.superclass.nil?
+            raise "class inheritance not yet implemented"
+          end
           # TODO - disappointing that we need to use upcase here
           unless prism_node.name.length > 0 && prism_node.name[0].upcase == prism_node.name[0]
             # TODO - this is a real runtime error
