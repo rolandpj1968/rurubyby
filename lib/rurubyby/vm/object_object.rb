@@ -28,6 +28,14 @@ module Rurubyby
       def lookup_method(name)
         @eigenclass.lookup_method(name)
       end
+
+      class << self
+        #
+        # Intrinsics
+        #
+
+        def rurubyby__id__(v) = v.__id__
+      end
     end
   end
 end

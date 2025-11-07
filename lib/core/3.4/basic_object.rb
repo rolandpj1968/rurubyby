@@ -1,3 +1,3 @@
 class BasicObject
-  def __id__ = __intrinsic__('BasicObject', :__id__)
+  def __id__ = __intrinsic__('::Rurubyby::Vm::ObjectObject', :rurubyby__id__, self)
 end
