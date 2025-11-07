@@ -8,6 +8,9 @@ module Rurubyby
         super(Core::FALSE_CLASS_CLASS)
       end
 
+      # Global singleton object
+      private_class_method :new
+
       def to_s = "false"
 
       FALSE_OBJECT = new

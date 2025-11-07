@@ -3,27 +3,27 @@ require_relative '../vm/symbol_object'
 module Rurubyby
   module Ast
     class SymbolLiteral
-      attr_reader :value
-
       def initialize(value)
+        raise "value must be a Vm::SymbolObject" unless value.class.equal?(Vm::SymbolObject)
         @value = value
       end
 
-      def to_s = "sym(#{value})"
+      # Only via SymbolLiteral.from to dedup
+      private_class_method :new
+
+      def to_s = "sym(#{@value})"
 
       def execute(_) = @value
 
-      # TODO this needs to be hoisted into the VM runtime cos _all_ symbols are deduped, even dynamically created symbols
-      # TODO - share with unique strings
       # TODO - thread-safety
       SymbolLiterals = {}
 
       def self.from(value)
         raise "SymbolLiteral value must be an String not #{value.class}" unless value.is_a?(String)
 
-        # TODO - handle locale encoding
+        # TODO - handle locale encoding?
         symbol = value.to_sym
-        SymbolLiterals[symbol] ||= new(::Rurubyby::Vm::SymbolObject.new(symbol))
+        SymbolLiterals[symbol] ||= new(Vm::SymbolObject.from(symbol))
       end
     end
   end

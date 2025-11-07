@@ -8,6 +8,9 @@ module Rurubyby
         super(Core::NIL_CLASS_CLASS)
       end
 
+      # Global singleton object
+      private_class_method :new
+
       def to_s = "nil"
 
       NIL_OBJECT = new

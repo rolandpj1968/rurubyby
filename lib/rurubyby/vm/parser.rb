@@ -70,9 +70,24 @@ module Rurubyby
           Ast::ConstantWrite.new(prism_node.name, transform(prism_node.value))
 
         when Prism::DefNode
-          raise "singleton/receiver method defs not handled yet" unless prism_node.receiver.nil?
-          raise "no idea what locals_body_index is" unless prism_node.locals_body_index.equal?(0)
-          raise "OK, so far so good"
+          raise "singleton/receiver method defs not supported yet" unless prism_node.receiver.nil?
+          params = []
+          unless prism_node.parameters.nil?
+            raise "Prism::DefNode is not a Prism::ParametersNode" unless prism_node.parameters.class.equal?(Prism::ParametersNode)
+            parameters = prism_node.parameters
+            raise "optional params not yet supported" unless parameters.optionals.empty?
+            raise "*rest params not yet supported" unless parameters.rest.nil?
+            raise "posts params I do not know what that means" unless parameters.posts.empty?
+            raise "keyword params not yet supported" unless parameters.keywords.empty?
+            raise "**keyword_rest params not yet supported" unless parameters.keyword_rest.nil?
+            raise "block param not yet supported" unless parameters.block.nil?
+            params = parameters.requireds.map do |required|
+              raise "required parameter is not a Prism::RequiredParameterNode" unless required.class.equal?(Prism::RequiredParameterNode)
+              required.name
+            end
+          end
+          raise "not sure what locals_body_index - expecting same as params" unless prism_node.locals_body_index == params.length
+          locals = prism_node.locals
 
         when Prism::CallNode
           # TODO - only when parsing core files

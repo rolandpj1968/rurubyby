@@ -5,9 +5,12 @@ module Rurubyby
     class TrueLiteral
       TRUE = TrueLiteral.new
 
+      # Global singleton
+      private_class_method :new
+
       def to_s = "true"
 
-      def execute(_) = ::Rurubyby::Vm::TrueObject::TRUE_OBJECT
+      def execute(_) = Vm::TrueObject::TRUE_OBJECT
     end
   end
 end

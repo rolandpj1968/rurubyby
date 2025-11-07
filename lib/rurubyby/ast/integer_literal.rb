@@ -3,14 +3,15 @@ require_relative '../vm/integer_object'
 module Rurubyby
   module Ast
     class IntegerLiteral
-      attr_reader :value
-
       def initialize(value)
         raise "IntegerLiteral value must be an IntegerObject" unless value.class.equal?(::Rurubyby::Vm::IntegerObject)
         @value = value
       end
 
-      def to_s = "int(#{value})"
+      # Only via IntegerLiteral.from
+      private_class_method :new
+
+      def to_s = "int(#{@value})"
 
       def execute(_) = @value
 

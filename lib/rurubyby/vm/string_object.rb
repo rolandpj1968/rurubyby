@@ -9,7 +9,7 @@ module Rurubyby
 
         super(Core::STRING_CLASS)
 
-        @value = value
+        @value = value.freeze
       end
 
       def to_s = @value

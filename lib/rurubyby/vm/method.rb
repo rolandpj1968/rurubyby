@@ -27,10 +27,15 @@ module Rurubyby
       def ast = @ast
 
       # TODO - thread-safety
+      # TODO - surely this does not belong here? There must be other uses of unique scopes?
       UniqueScopes = {}
 
       def self.unique_scopes(scopes)
-        UniqueScopes[scopes] ||= scopes.dup
+        # TODO - thread safety
+        value = UniqueScopes[scopes]
+        return value unless value.nil?
+        frozen_scopes = scopes.dup.freeze
+        UniqueScopes[frozen_scopes] = frozen_scopes
       end
     end
   end

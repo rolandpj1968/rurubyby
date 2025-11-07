@@ -17,7 +17,7 @@ module Rurubyby
       end
 
       def to_s
-        "class(#{@name}, TODO)"
+        "class(#{@name}, locals: #{@locals} body: #{@ast})"
       end
 
       def execute(context)

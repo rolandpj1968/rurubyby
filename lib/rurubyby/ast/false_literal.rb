@@ -5,9 +5,12 @@ module Rurubyby
     class FalseLiteral
       FALSE = FalseLiteral.new
 
+      # Global singleton
+      private_class_method :new
+
       def to_s = "false"
 
-      def execute(_) = ::Rurubyby::Vm::FalseObject::FALSE_OBJECT
+      def execute(_) = Vm::FalseObject::FALSE_OBJECT
     end
   end
 end
