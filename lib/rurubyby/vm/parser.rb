@@ -69,28 +69,6 @@ module Rurubyby
         when Prism::ConstantWriteNode
           Ast::ConstantWrite.new(prism_node.name, transform(prism_node.value))
 
-        when Prism::DefNode
-          raise "singleton/receiver method defs not supported yet" unless prism_node.receiver.nil?
-
-          params = []
-          unless prism_node.parameters.nil?
-            raise "Prism::DefNode is not a Prism::ParametersNode" unless prism_node.parameters.class.equal?(Prism::ParametersNode)
-            parameters = prism_node.parameters
-            raise "optional params not yet supported" unless parameters.optionals.empty?
-            raise "*rest params not yet supported" unless parameters.rest.nil?
-            raise "posts params I do not know what that means" unless parameters.posts.empty?
-            raise "keyword params not yet supported" unless parameters.keywords.empty?
-            raise "**keyword_rest params not yet supported" unless parameters.keyword_rest.nil?
-            raise "block param not yet supported" unless parameters.block.nil?
-            params = parameters.requireds.map do |required|
-              raise "required parameter is not a Prism::RequiredParameterNode" unless required.class.equal?(Prism::RequiredParameterNode)
-              required.name
-            end
-          end
-          raise "not sure what locals_body_index - expecting same as params count" unless prism_node.locals_body_index == params.length
-
-          Ast::MethodDef.new(prism_node.name, params, prism_node.locals, transform(prism_node.body))
-
         when Prism::CallNode
           # TODO - only when parsing core files
           if prism_node.name.equal?(:__intrinsic__)
@@ -104,8 +82,9 @@ module Rurubyby
             Ast::IntrinsicCall.new(args[0].unescaped, args[1].unescaped.to_sym, args[2..].map { |pn| transform(pn) })
           else
             receiver_node = prism_node.receiver.nil? ? nil : transform(prism_node.receiver)
+            args = prism_node.arguments.nil? ? [] : prism_node.arguments.arguments.map { |pn| transform(pn) }
 
-            Ast::MethodCall.new(prism_node.name, receiver_node, prism_node.arguments.arguments.map { |pn| transform(pn) })
+            Ast::MethodCall.new(prism_node.name, receiver_node, args)
           end
 
         when Prism::ClassNode
@@ -125,8 +104,46 @@ module Rurubyby
             # TODO - this is a real runtime error
             raise "class name '#{prism_node.name} is not a valid constant name"
           end
-          body_ast = transform(prism_node.ast) unless prism_node.body.nil?
+          body_ast =
+            # Prism curiosity for empty class defs, but...
+            #  $ ruby -e "v = class C; end; puts v.class"
+            #  NilClass
+            if prism_node.body.nil?
+              Ast::NilLiteral::NIL
+            else
+              transform(prism_node.body)
+            end
           Ast::ClassDef.new(prism_node.name, prism_node.locals, body_ast)
+
+        when Prism::DefNode
+          raise "singleton/receiver method defs not supported yet" unless prism_node.receiver.nil?
+
+          params = []
+          unless prism_node.parameters.nil?
+            raise "Prism::DefNode is not a Prism::ParametersNode" unless prism_node.parameters.class.equal?(Prism::ParametersNode)
+            parameters = prism_node.parameters
+            raise "optional params not yet supported" unless parameters.optionals.empty?
+            raise "*rest params not yet supported" unless parameters.rest.nil?
+            raise "posts params I do not know what that means" unless parameters.posts.empty?
+            raise "keyword params not yet supported" unless parameters.keywords.empty?
+            raise "**keyword_rest params not yet supported" unless parameters.keyword_rest.nil?
+            raise "block param not yet supported" unless parameters.block.nil?
+            params = parameters.requireds.map do |required|
+              raise "required parameter is not a Prism::RequiredParameterNode" unless required.class.equal?(Prism::RequiredParameterNode)
+              required.name
+            end
+          end
+          raise "not sure what locals_body_index is - expecting same as params count" unless prism_node.locals_body_index == params.length
+
+          body_ast =
+            # Prism curiosity for empty method defs
+            if prism_node.body.nil?
+              Ast::NilLiteral::NIL
+            else
+              transform(prism_node.body)
+            end
+          Ast::MethodDef.new(prism_node.name, params, prism_node.locals, body_ast)
+
         else
           raise "Unexpected Prism node type #{prism_node.class}"
         end

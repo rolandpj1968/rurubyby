@@ -1,4 +1,3 @@
-# Ugh, bad coupling - perhaps unavoidable with ruby semantics :(
 require_relative "../vm/core"
 require_relative '../vm/module_object'
 require_relative '../vm/nil_object'
@@ -40,11 +39,9 @@ module Rurubyby
         context.push_frame(new_frame)
 
         begin
-          @ast.execute(context) unless @ast.nil?
-          # Always nil
-          #  $ ruby -e "a = class C; end; puts a.class"
-          #  NilClass
-          Vm::NilObject::NIL_OBJECT
+          # $ ruby -e 'v = class C; 3; end; puts v'
+          # 3
+          @ast.execute(context)
         ensure
           context.pop_frame
           context.scopes.pop
