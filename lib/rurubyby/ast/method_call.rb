@@ -15,7 +15,7 @@ module Rurubyby
       def execute(context)
         receiver =
           if @receiver_node.nil?
-            frame.the_self
+            context.frame.the_self
           else
             @receiver_node.execute(context)
           end

@@ -71,6 +71,7 @@ module Rurubyby
 
         when Prism::DefNode
           raise "singleton/receiver method defs not supported yet" unless prism_node.receiver.nil?
+
           params = []
           unless prism_node.parameters.nil?
             raise "Prism::DefNode is not a Prism::ParametersNode" unless prism_node.parameters.class.equal?(Prism::ParametersNode)
@@ -86,8 +87,9 @@ module Rurubyby
               required.name
             end
           end
-          raise "not sure what locals_body_index - expecting same as params" unless prism_node.locals_body_index == params.length
-          locals = prism_node.locals
+          raise "not sure what locals_body_index - expecting same as params count" unless prism_node.locals_body_index == params.length
+
+          Ast::MethodDef.new(prism_node.name, params, prism_node.locals, transform(prism_node.body))
 
         when Prism::CallNode
           # TODO - only when parsing core files

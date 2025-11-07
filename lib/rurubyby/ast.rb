@@ -19,3 +19,4 @@ require_relative 'ast/intrinsic_call'
 require_relative 'ast/method_call'
 
 require_relative 'ast/class_def'
+require_relative 'ast/method_def'
