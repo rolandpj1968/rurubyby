@@ -16,6 +16,8 @@ module Rurubyby
       end
 
       def run
+        load_core
+
         Core::OBJECT_CLASS.set_constant(:RUBY_VERSION, Ast::StringLiteral.from('3.4.1'))
 
         Core::INTEGER_CLASS.set_method(
@@ -69,6 +71,20 @@ module Rurubyby
       end
 
       private
+
+      def execute_file(path) = execute(File.read(path))
+
+      # TODO - the most recent docs as of time of writing
+      #   https://docs.ruby-lang.org/en/3.4/
+      RURUBYBY_CORE_VERSION = "3.4"
+      def load_core
+        version = RURUBYBY_CORE_VERSION
+        puts Dir.pwd
+        core_path = "./lib/core/#{version}" # TODO - work out rurubyby dir
+
+        # TODO - read list from manifest somewhere...
+        execute_file("#{core_path}/basic_object.rb")
+      end
 
       def execute(script)
         puts "Executing: '#{script}'"
