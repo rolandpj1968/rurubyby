@@ -16,27 +16,27 @@ module Rurubyby
       end
 
       def run
-        load_core
+        #load_core
 
         Core::OBJECT_CLASS.set_constant(:RUBY_VERSION, Ast::StringLiteral.from('3.4.1'))
 
-        Core::INTEGER_CLASS.set_method(
-          :+,
-          Method.new(
-            [Core::INTEGER_CLASS], # scopes
-            :+,
-            [:v],
-            [:v],
-            Ast::IntrinsicCall.new(
-              '::Rurubyby::Vm::IntegerObject',
-              :add,
-              [
-                Ast::SelfLiteral::SELF,
-                Ast::LocalVariableRead.new(:v, 3)
-              ]
-            )
-          )
-        )
+        # Core::INTEGER_CLASS.set_method(
+        #   :+,
+        #   Method.new(
+        #     [Core::INTEGER_CLASS], # scopes
+        #     :+,
+        #     [:v],
+        #     [:v],
+        #     Ast::IntrinsicCall.new(
+        #       '::Rurubyby::Vm::IntegerObject',
+        #       :add,
+        #       [
+        #         Ast::SelfLiteral::SELF,
+        #         Ast::LocalVariableRead.new(:v, 3)
+        #       ]
+        #     )
+        #   )
+        # )
 
         scripts = @options[:scripts]
 

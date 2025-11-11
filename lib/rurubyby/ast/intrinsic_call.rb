@@ -1,14 +1,14 @@
 module Rurubyby
   module Ast
     class IntrinsicCall
-      def initialize(class_name, method_name, arg_nodes)
-        @method = IntrinsicCall.method_for(class_name, method_name)
+      def initialize(method_name, arg_nodes)
+        @method = IntrinsicCall.method_for(method_name)
         @arg_nodes = arg_nodes
       end
 
       def to_s
         # @method.owner is class's eigenclass??? - not sure how to get the Class name
-        "__intrinsic__[#{@method.owner}.#{@method.name}](#{@arg_nodes.map(&:to_s).join('; ')})"
+        "intrinsic[#{@method.name}](#{@arg_nodes.map(&:to_s).join(', ')})"
       end
 
       def execute(context)
@@ -20,10 +20,9 @@ module Rurubyby
       # TODO - thread safety
       Methods = {}
 
-      def self.method_for(class_name, method_name)
-        raise 'IntrinsicCall class_name must be a String' unless class_name.class.equal?(String)
+      def self.method_for(method_name)
         raise 'IntrinsicCall method_name must be a Symbol' unless method_name.class.equal?(Symbol)
-        Methods[[class_name, method_name]] ||= Kernel.const_get(class_name).method(method_name)
+        Methods[method_name] ||= Kernel.const_get(::Rurubyby::Vm::Intrinsics).method(method_name)
       end
     end
   end

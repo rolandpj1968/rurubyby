@@ -71,15 +71,8 @@ module Rurubyby
 
         when Prism::CallNode
           # TODO - only when parsing core files
-          if prism_node.name.equal?(:__intrinsic__)
-            raise "__intrinsic__ calls cannot have an explicit receiver" unless prism_node.receiver.nil?
-            args = prism_node.arguments.arguments
-
-            raise "__intrinsic__ call must include class name and method" unless args.length >= 2
-            raise "__intrinsic__ class name must be a String" unless args[0].class.equal?(Prism::StringNode)
-            raise "__intrinsic__ method name must be a Symbol" unless args[1].class.equal?(Prism::SymbolNode)
-
-            Ast::IntrinsicCall.new(args[0].unescaped, args[1].unescaped.to_sym, args[2..].map { |pn| transform(pn) })
+          if prism_node.receiver.class.equal?(Prism::ConstantReadNode) && prism_node.name.equal?(:Intrinsics)
+            Ast::IntrinsicCall.new(prism_node.name, prism_node.arguments.arguments.map { |pn| transform(pn) })
           else
             receiver_node = prism_node.receiver.nil? ? nil : transform(prism_node.receiver)
             args = prism_node.arguments.nil? ? [] : prism_node.arguments.arguments.map { |pn| transform(pn) }
