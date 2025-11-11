@@ -12,6 +12,8 @@ require_relative 'ast/or'
 
 require_relative 'ast/sequence'
 
+require_relative 'ast/if'
+
 require_relative 'ast/local_variable_read'
 
 require_relative 'ast/constant_read'

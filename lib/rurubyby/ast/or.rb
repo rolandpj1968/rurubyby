@@ -12,7 +12,7 @@ module Rurubyby
 
       def execute(context)
         left_value = @left_node.execute(context)
-        return left_value unless left_value.equal?(Vm::FalseObject::FALSE) || left_value.equal?(Vm::NilObject::NIL)
+        return left_value if left_value.truthy?
 
         @right_node.execute(context)
       end

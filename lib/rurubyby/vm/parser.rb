@@ -24,18 +24,6 @@ module Rurubyby
 
       def transform(prism_node)
         case prism_node
-        when Prism::StatementsNode
-          body = prism_node.body
-
-          case body.length
-          when 0
-            Ast::NilLiteral::NIL
-          when 1
-            transform(body[0])
-          else
-            Ast::Sequence.new(body.map { |pn| transform(pn) })
-          end
-
         when Prism::NilNode
           Ast::NilLiteral::NIL
 
@@ -62,6 +50,19 @@ module Rurubyby
 
         when Prism::OrNode
           Ast::Or.new(transform(prism_node.left), transform(prism_node.right))
+
+        when Prism::StatementsNode
+          Ast::Sequence.new(prism_node.body.map { |pn| transform(pn) })
+
+        when Prism::IfNode
+          Ast::If.new(
+            transform(prism_node.predicate),
+            transform(prism_node.statements),
+            prism_node.consequent.nil? ? nil : transform(prism_node.consequent)
+          )
+
+        when Prism::ElseNode
+          transform(prism_node.statements)
 
         when Prism::LocalVariableReadNode
           Ast::LocalVariableRead.new(prism_node.name, prism_node.depth)

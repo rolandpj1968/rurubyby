@@ -28,6 +28,10 @@ module Rurubyby
       def lookup_method(name)
         @eigenclass.lookup_method(name)
       end
+
+      def truthy?
+        !equal?(FalseObject::FALSE) && !equal?(NilObject::NIL)
+      end
     end
   end
 end
