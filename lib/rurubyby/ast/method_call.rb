@@ -13,6 +13,7 @@ module Rurubyby
       end
 
       def execute(context)
+        puts "          RPJ = MethodCall#execute method #{@method} receiver #{@receiver_node.class}"
         receiver =
           if @receiver_node.nil?
             context.frame.the_self

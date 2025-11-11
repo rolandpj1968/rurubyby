@@ -74,7 +74,7 @@ module Rurubyby
 
         when Prism::CallNode
           # TODO - only when parsing core files
-          if prism_node.receiver.class.equal?(Prism::ConstantReadNode) && prism_node.name.equal?(:Intrinsics)
+          if prism_node.receiver.class.equal?(Prism::ConstantReadNode) && prism_node.receiver.name.equal?(:Intrinsics)
             Ast::IntrinsicCall.new(prism_node.name, prism_node.arguments.arguments.map { |pn| transform(pn) })
           else
             receiver_node = prism_node.receiver.nil? ? nil : transform(prism_node.receiver)

@@ -1,3 +1,5 @@
+require_relative '../vm/intrinsics'
+
 module Rurubyby
   module Ast
     class IntrinsicCall
@@ -22,7 +24,7 @@ module Rurubyby
 
       def self.method_for(method_name)
         raise 'IntrinsicCall method_name must be a Symbol' unless method_name.class.equal?(Symbol)
-        Methods[method_name] ||= Kernel.const_get(::Rurubyby::Vm::Intrinsics).method(method_name)
+        Methods[method_name] ||= ::Rurubyby::Vm::Intrinsics.method(method_name)
       end
     end
   end
