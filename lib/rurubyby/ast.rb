@@ -8,6 +8,8 @@ require_relative 'ast/float_literal'
 require_relative 'ast/string_literal'
 require_relative 'ast/symbol_literal'
 
+require_relative 'ast/or'
+
 require_relative 'ast/sequence'
 
 require_relative 'ast/local_variable_read'

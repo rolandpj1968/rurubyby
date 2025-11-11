@@ -13,7 +13,7 @@ module Rurubyby
 
       def to_s = "nil"
 
-      NIL_OBJECT = new
+      NIL = new
     end
   end
 end

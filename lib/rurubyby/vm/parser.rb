@@ -60,6 +60,9 @@ module Rurubyby
         when Prism::SymbolNode
           Ast::SymbolLiteral.from(prism_node.unescaped)
 
+        when Prism::OrNode
+          Ast::Or.new(transform(prism_node.left), transform(prism_node.right))
+
         when Prism::LocalVariableReadNode
           Ast::LocalVariableRead.new(prism_node.name, prism_node.depth)
 

@@ -5,7 +5,7 @@ module Rurubyby
         # TODO - map locals to slot number
         @locals = {}
         locals.each do |local|
-          @locals[local] = NilObject::NIL_OBJECT
+          @locals[local] = NilObject::NIL
         end
         @the_self = the_self
         @scopes = scopes

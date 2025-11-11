@@ -13,7 +13,7 @@ module Rurubyby
 
       def to_s = "false"
 
-      FALSE_OBJECT = new
+      FALSE = new
     end
   end
 end

@@ -10,7 +10,7 @@ module Rurubyby
 
       def to_s = "false"
 
-      def execute(_) = Vm::FalseObject::FALSE_OBJECT
+      def execute(_) = Vm::FalseObject::FALSE
     end
   end
 end

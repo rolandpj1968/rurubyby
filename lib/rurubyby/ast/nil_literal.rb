@@ -10,7 +10,7 @@ module Rurubyby
 
       def to_s = "nil"
 
-      def execute(_) = Vm::NilObject::NIL_OBJECT
+      def execute(_) = Vm::NilObject::NIL
     end
   end
 end

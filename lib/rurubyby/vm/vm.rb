@@ -16,7 +16,7 @@ module Rurubyby
       end
 
       def run
-        #load_core
+        load_core
 
         Core::OBJECT_CLASS.set_constant(:RUBY_VERSION, Ast::StringLiteral.from('3.4.1'))
 

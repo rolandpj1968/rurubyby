@@ -10,7 +10,7 @@ module Rurubyby
 
       def to_s = "true"
 
-      def execute(_) = Vm::TrueObject::TRUE_OBJECT
+      def execute(_) = Vm::TrueObject::TRUE
     end
   end
 end
