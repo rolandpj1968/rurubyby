@@ -84,6 +84,7 @@ module Rurubyby
 
         # TODO - read list from manifest somewhere...
         execute_file("#{core_path}/basic_object.rb")
+        execute_file("#{core_path}/integer.rb")
       end
 
       def execute(script)

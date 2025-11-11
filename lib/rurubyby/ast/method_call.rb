@@ -9,11 +9,11 @@ module Rurubyby
       end
 
       def to_s
-        "call(#{@name}, TODO)"
+        "call(#{@name}, #{@receiver_node || '_'}, #{@arg_nodes.map(&:to_s).join(', ')})"
       end
 
       def execute(context)
-        puts "          RPJ = MethodCall#execute method #{@method} receiver #{@receiver_node.class}"
+        puts "          RPJ = MethodCall#execute method :#{@name} receiver #{@receiver_node}"
         receiver =
           if @receiver_node.nil?
             context.frame.the_self
@@ -24,9 +24,11 @@ module Rurubyby
         args = @arg_nodes.map { |arg_node| arg_node.execute(context) }
 
         method = receiver.lookup_method(@name)
+        puts "          RPJ = MethodCall#execute method :#{@name} receiver #{receiver.class}"
+        puts "          RPJ =    method found is #{method}"
 
         # TODO - this is a runtime exception, not an assert
-        raise "method not found - not yet doing missing_method" if method.nil?
+        raise "method :#{@name} not found - not yet doing missing_method" if method.nil?
 
         new_frame = Vm::Frame.new(receiver, method.locals, method.scopes)
 

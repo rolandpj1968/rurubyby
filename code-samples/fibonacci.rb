@@ -6,6 +6,7 @@ def fibonacci(n)
   end
 end
 
-N = 38
+N = 20
 
-puts "fibonacci(#{N}) is #{fibonacci(N)}"
+fibonacci(N)
+#puts "fibonacci(#{N}) is #{fibonacci(N)}"

@@ -1,6 +1,7 @@
 module Rurubyby
   module Vm
     class Method
+      # TODO - we don't want scopes here - we want the owner!!!
       # TODO - default params, keyword params, block param
       def initialize(scopes, name, params, locals, ast)
         # TODO - array of class/modules
@@ -25,6 +26,8 @@ module Rurubyby
       def locals = @locals
 
       def ast = @ast
+
+      def to_s = "method(owner?, :#{@name}, #{@params} -> #{@ast})"
 
       # TODO - thread-safety
       # TODO - surely this does not belong here? There must be other uses of unique scopes?
