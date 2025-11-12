@@ -4,11 +4,12 @@ class BasicObject
   def ! = false.equal?(self) || nil.equal?(self)
 
   def ==(v) = Intrinsics.basic_object__equal_equal_(self, v)
+  def equal?(v) = Intrinsics.basic_object__equal_equal_(self, v)
   # TODO
   # alias == eql?
   # alias equal? eql?
 
-  def !=(v) = Intrinsics.basic_object__not_equal_(self, v)
+  def !=(v) = !(self == v)
 
   # TODO
   # __send__
