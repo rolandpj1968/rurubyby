@@ -1,3 +1,11 @@
+begin
+  RubyVM::YJIT.enable
+  puts "RubyVM::YJIT.enabled? #{RubyVM::YJIT.enabled?}"
+rescue NameError
+  puts "RubyVM::YJIT not available"
+end
+
+
 require 'optparse'
 
 require_relative 'lib/rurubyby/vm/vm'

@@ -13,17 +13,17 @@ module Rurubyby
 
         # Integer
         def integer__leq_(v1, v2)
-          raise "BUG: Integer <= intrinsic must be called with Integer values" unless v1.class.equal?(IntegerObject) and v2.class.equal?(IntegerObject)
+          #raise "BUG: Integer <= intrinsic must be called with Integer values" unless v1.class.equal?(IntegerObject) and v2.class.equal?(IntegerObject)
           bool_object_for(v1.value <= v2.value)
         end
 
         def integer__plus_(v1, v2)
-          raise "BUG: Integer + intrinsic must be called with Integer values" unless v1.class.equal?(IntegerObject) and v2.class.equal?(IntegerObject)
+          #raise "BUG: Integer + intrinsic must be called with Integer values" unless v1.class.equal?(IntegerObject) and v2.class.equal?(IntegerObject)
           IntegerObject.new(v1.value + v2.value)
         end
 
         def integer__minus_(v1, v2)
-          raise "BUG: Integer + intrinsic must be called with Integer values" unless v1.class.equal?(IntegerObject) and v2.class.equal?(IntegerObject)
+          #raise "BUG: Integer + intrinsic must be called with Integer values" unless v1.class.equal?(IntegerObject) and v2.class.equal?(IntegerObject)
           IntegerObject.new(v1.value - v2.value)
         end
       end

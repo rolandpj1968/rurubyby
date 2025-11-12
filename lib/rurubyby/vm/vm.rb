@@ -88,14 +88,14 @@ module Rurubyby
       end
 
       def execute(script)
-        puts "Executing: '#{script}'"
+        #puts "Executing: '#{script}'"
 
         ast = Parser.new(script).ast
 
-        puts
-        puts "AST root isa #{ast.class}"
-        puts
-        puts "AST: #{ast}"
+        # puts
+        # puts "AST root isa #{ast.class}"
+        # puts
+        # puts "AST: #{ast}"
 
         # TODO - top-level object, locals, etc.
         # Note: top-level object and state are shared for all scripts

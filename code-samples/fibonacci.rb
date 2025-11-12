@@ -6,7 +6,14 @@ def fibonacci(n)
   end
 end
 
-N = 20
+N = 30
 
-fibonacci(N)
-#puts "fibonacci(#{N}) is #{fibonacci(N)}"
+# ruby
+result = 0
+300.times {
+  result = fibonacci(N)
+}
+puts result
+
+# rurububy (for now)
+# fibonacci(N)

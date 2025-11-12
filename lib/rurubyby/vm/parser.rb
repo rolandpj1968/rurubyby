@@ -13,7 +13,7 @@ module Rurubyby
 
       def ast
         program_node = Prism.parse(text).value
-        puts program_node.inspect
+        #puts program_node.inspect
 
         raise "Unexpected Prism.parse value type #{value.class} expecting Prism::ProgramNode" unless program_node.is_a?(Prism::ProgramNode)
 
@@ -130,7 +130,7 @@ module Rurubyby
               required.name
             end
           end
-          raise "not sure what locals_body_index is - expecting same as params count" unless prism_node.locals_body_index == params.length
+          #raise "not sure what locals_body_index is - expecting same as params count" unless prism_node.locals_body_index == params.length - not present in ruby 3.4.1
 
           body_ast =
             # Prism curiosity for empty method defs
