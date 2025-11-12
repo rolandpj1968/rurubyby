@@ -13,7 +13,7 @@ module Rurubyby
 
       def ast
         program_node = Prism.parse(text).value
-        #puts program_node.inspect
+        puts program_node.inspect
 
         raise "Unexpected Prism.parse value type #{value.class} expecting Prism::ProgramNode" unless program_node.is_a?(Prism::ProgramNode)
 
@@ -50,6 +50,9 @@ module Rurubyby
 
         when Prism::OrNode
           Ast::Or.new(transform(prism_node.left), transform(prism_node.right))
+
+        when Prism::ParenthesesNode
+          transform(prism_node.body)
 
         when Prism::StatementsNode
           Ast::Sequence.new(prism_node.body.map { |pn| transform(pn) })

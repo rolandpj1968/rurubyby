@@ -24,7 +24,11 @@ module Rurubyby
       end
 
       # Integer
-      def_int_cmp('_leq_', '<=')
+      def_int_cmp('_lt_', '<')
+      def_int_cmp('_le_', '<=')
+      def_int_cmp('_ge_', '>=')
+      def_int_cmp('_gt_', '>')
+      def_int_cmp('_eq_', '==') # TODO - should be alias for ===
 
       def_int_bin_op('_plus_', '+')
       def_int_bin_op('_minus_', '-')
