@@ -9,11 +9,11 @@ end
 N = 30
 
 # ruby
-result = 0
-300.times {
-  result = fibonacci(N)
-}
-puts result
+# result = 0
+# 300.times {
+#   result = fibonacci(N)
+# }
+# puts result
 
 # rurububy (for now)
-# fibonacci(N)
+fibonacci(N)
