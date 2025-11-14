@@ -144,6 +144,12 @@ module Rurubyby
             end
           Ast::MethodDef.new(prism_node.name, params, prism_node.locals, body_ast)
 
+        when Prism::AliasMethodNode
+          raise "new_name #{prism_node.new_name.class} must be a Prism::SymbolNode" unless prism_node.new_name.class.equal?(Prism::SymbolNode)
+          raise "old_name #{prism_node.old_name.class} must be a Prism::SymbolNode" unless prism_node.old_name.class.equal?(Prism::SymbolNode)
+          puts "new_name #{prism_node.new_name.unescaped.class}"
+          Ast::MethodAlias.new(prism_node.new_name.unescaped.to_sym, prism_node.old_name.unescaped.to_sym)
+
         else
           raise "Unexpected Prism node type #{prism_node.class}"
         end

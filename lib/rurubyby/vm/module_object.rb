@@ -17,6 +17,8 @@ module Rurubyby
         @constants = {}
       end
 
+      def name = @name
+
       def to_s = "module #{@name}"
 
       def set_method(name, method)

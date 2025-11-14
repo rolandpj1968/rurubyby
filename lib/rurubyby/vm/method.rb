@@ -28,6 +28,12 @@ module Rurubyby
 
       def to_s = "method(#{scopes.map(&:to_s)}, :#{@name}, #{@params} -> #{@ast})"
 
+      def alias_as(name)
+        raise "name must be a Symbol" unless name.class.equal?(Symbol)
+        # TODO - default params, keyword params, block param - same same
+        Method.new(scopes, name, params, locals, ast)
+      end
+
       # TODO - thread-safety
       # TODO - surely this does not belong here? There must be other uses of unique scopes?
       UniqueScopes = {}

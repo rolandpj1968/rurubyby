@@ -14,7 +14,7 @@ module Rurubyby
         @modules = nil
       end
 
-      def to_s = "class #{@name}"
+      def to_s = "class(#{@name})"
 
       # class "Class" circular depenency band-aid - see core.rb too
       def patch_class_object
