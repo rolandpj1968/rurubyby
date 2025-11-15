@@ -4,7 +4,9 @@ module Rurubyby
   module Ast
     class IntegerLiteral
       def initialize(value)
-        raise "IntegerLiteral value must be an IntegerObject" unless value.class.equal?(::Rurubyby::Vm::IntegerObject)
+        # native integers
+        raise "IntegerLiteral value must be an Integer" unless value.class.equal?(Integer)
+        #raise "IntegerLiteral value must be an IntegerObject" unless value.class.equal?(::Rurubyby::Vm::IntegerObject)
         @value = value
       end
 
@@ -21,7 +23,9 @@ module Rurubyby
       def self.from(value)
         raise "IntegerLiteral value must be an Integer not #{value.class}" unless value.class.equal?(Integer)
 
-        IntegerLiterals[value] ||= new(::Rurubyby::Vm::IntegerObject.new(value))
+        # native integers
+        IntegerLiterals[value] ||= new(value)
+        #IntegerLiterals[value] ||= new(::Rurubyby::Vm::IntegerObject.new(value))
       end
     end
   end

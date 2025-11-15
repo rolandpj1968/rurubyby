@@ -23,7 +23,15 @@ module Rurubyby
       
         args = @arg_nodes.map { |arg_node| arg_node.execute(context) }
 
-        method = receiver.lookup_method(@name)
+        # native integer support
+        receiver_class =
+          if receiver.class.equal?(Integer)
+            Vm::Core::INTEGER_CLASS
+          else
+            receiver.eigenclass
+          end
+
+        method = receiver_class.lookup_method(@name)
         #puts "          RPJ = MethodCall#execute method :#{@name} receiver #{receiver.class}"
         #puts "          RPJ =    method found is #{method}"
 

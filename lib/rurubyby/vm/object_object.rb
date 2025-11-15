@@ -10,6 +10,7 @@ module Rurubyby
         @eigenclass = class_object # promoted to singleton class at first singleton method def
       end
 
+      def eigenclass = @eigenclass
       #def class_object = @class_object
 
       def create_singleton_class
