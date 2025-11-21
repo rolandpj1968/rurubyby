@@ -1,13 +1,16 @@
 module Rurubyby
   module Vm
     class Context
-      def initialize
+      def initialize(vm)
+        @vm = vm
         # execution stack - one frame per call
         @frames = []
         # lexical scope stack - one per class/module nesting
         #   - mostly interesting when parsing
         @scopes = []
       end
+
+      def vm = @vm
 
       def push_frame(frame)
         raise "frame must be a Frame" unless frame.class.equal?(Frame)

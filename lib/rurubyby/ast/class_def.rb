@@ -31,6 +31,7 @@ module Rurubyby
           # TODO namespace and superclass
           class_constant = Vm::ClassObject.new(@name, nil, nil)
           puts "adding class '#{@name}' constant to scope #{context.scopes.last}"
+          context.vm.new_class(klass)
           context.scopes.last.set_constant(@name, class_constant)
         end
 

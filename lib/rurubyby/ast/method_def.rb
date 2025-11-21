@@ -20,15 +20,18 @@ module Rurubyby
       end
 
       def execute(context)
-        context.scopes.last.set_method(
+        method = Vm::Method.new(
+          context.scopes,
           @name,
-          Vm::Method.new(
-            context.scopes,
-            @name,
-            @params,
-            @locals,
-            @ast
-          )
+          @params,
+          @locals,
+          @ast
+        )
+        class_or_module = context.scopes.last
+        context.vm.new_method(class_or_module, method)
+        class_or_module.set_method(
+          @name,
+          method
         )
         # Ruby seems to generate the method name
         #   ruby -e 'a = def m = 3; puts a; puts a.class' -> m, Symbol

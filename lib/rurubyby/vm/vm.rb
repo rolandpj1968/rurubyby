@@ -13,6 +13,10 @@ module Rurubyby
     class Vm
       def initialize(options)
         @options = options
+        # increments on all class, module or method defs
+        # TODO constants too...
+        # TODO thread-safety
+        @epoch = 0
       end
 
       def run
@@ -68,6 +72,22 @@ module Rurubyby
         puts "Integers: #{Ast::IntegerLiteral::IntegerLiterals.transform_values(&:to_s)}"
         puts
         puts "Intrinsics: #{Ast::IntrinsicCall::Methods.transform_values(&:to_s)}"
+        puts
+        puts "Epoch: #{@epoch}"
+      end
+
+      ################# Vm state mutations #####################
+
+      def new_class(klass)
+        @epoch += 1
+      end
+
+      def new_module(modulee)
+        @epoch += 1
+      end
+
+      def new_method(class_or_module, method)
+        @epoch += 1
       end
 
       private
@@ -102,7 +122,7 @@ module Rurubyby
         top_level_scope = Core::OBJECT_CLASS
         top_level_object = ObjectObject.new(Core::OBJECT_CLASS)
 
-        context = Context.new
+        context = Context.new(self)
 
         frame = Frame.new(top_level_object, [], [top_level_scope])
         context.push_frame(frame)
