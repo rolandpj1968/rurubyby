@@ -17,7 +17,16 @@ module Rurubyby
         # TODO constants too...
         # TODO thread-safety
         @epoch = 0
+
+        # optimisations
+        @cache_method_calls = true
+
+        # stats
+        @stats_method_calls = 0
+        @stats_method_call_cache_misses = 0
       end
+
+      def epoch = @epoch
 
       def run
         load_core
@@ -64,16 +73,19 @@ module Rurubyby
         puts
         puts "result: #{result}"
 
-        puts
-        puts "Strings: #{Ast::StringLiteral::StringLiterals.transform_values(&:to_s)}"
-        puts
-        puts "Symbols: #{Ast::SymbolLiteral::SymbolLiterals.transform_values(&:to_s)}"
-        puts
-        puts "Integers: #{Ast::IntegerLiteral::IntegerLiterals.transform_values(&:to_s)}"
-        puts
-        puts "Intrinsics: #{Ast::IntrinsicCall::Methods.transform_values(&:to_s)}"
-        puts
-        puts "Epoch: #{@epoch}"
+        # puts
+        # puts "Strings: #{Ast::StringLiteral::StringLiterals.transform_values(&:to_s)}"
+        # puts
+        # puts "Symbols: #{Ast::SymbolLiteral::SymbolLiterals.transform_values(&:to_s)}"
+        # puts
+        # puts "Integers: #{Ast::IntegerLiteral::IntegerLiterals.transform_values(&:to_s)}"
+        # puts
+        # puts "Intrinsics: #{Ast::IntrinsicCall::Methods.transform_values(&:to_s)}"
+        # puts
+        # puts "Epoch: #{@epoch}"
+        # puts
+        # puts "#{@stats_method_calls} method calls; #{@stats_method_call_cache_misses} cache misses"
+        # puts
       end
 
       ################# Vm state mutations #####################
@@ -88,6 +100,20 @@ module Rurubyby
 
       def new_method(class_or_module, method)
         @epoch += 1
+      end
+
+      ################# Vm optimisations #####################
+
+      def cache_method_calls = @cache_method_calls
+
+      ################# Vm stats #####################
+
+      def count_method_call
+        @stats_method_calls += 1
+      end
+
+      def count_method_call_cache_miss
+        @stats_method_call_cache_misses += 1
       end
 
       private

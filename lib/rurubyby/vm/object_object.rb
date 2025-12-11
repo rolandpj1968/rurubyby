@@ -10,7 +10,9 @@ module Rurubyby
         @eigenclass = class_object # promoted to singleton class at first singleton method def
       end
 
-      #def class_object = @class_object
+      def class_object = @class_object
+
+      def singleton_methods? = @class_object != @eigenclass
 
       def create_singleton_class
         if @eigenclass.equal?(@class_object)

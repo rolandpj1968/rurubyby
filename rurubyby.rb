@@ -15,8 +15,8 @@ options = {
   scripts: [],
 }
 
-puts "ARGV:"
-puts ARGV
+# puts "ARGV:"
+# puts ARGV
 
 OptionParser.new do |opts|
   opts.banner = "Usage: rurubyby.rb [options]"
@@ -30,8 +30,8 @@ OptionParser.new do |opts|
   end
 end.order!
 
-puts "ARGV:"
-puts ARGV
+# puts "ARGV:"
+# puts ARGV
 
 options[:argv] = ARGV
 

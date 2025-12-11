@@ -6,7 +6,8 @@ def fibonacci(n)
   end
 end
 
-N = 30
+N = 36
+#N = 4
 
 # ruby
 # result = 0

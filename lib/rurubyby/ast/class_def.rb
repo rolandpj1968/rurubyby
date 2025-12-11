@@ -22,7 +22,7 @@ module Rurubyby
       def execute(context)
         # 1. find or create the class defn and constant
         class_constant = Vm::ModuleObject.lookup_constant(@name, context.scopes)
-        puts "previous constant '#{@name}' #{class_constant}/#{class_constant.class}"
+        #puts "previous constant '#{@name}' #{class_constant}/#{class_constant.class}"
         unless class_constant.nil? or class_constant.class.equal?(Vm::ClassObject)
           # TODO this is a real runtime error, not an assert
           raise "previous defn of #{@name} was not a class"
@@ -30,7 +30,7 @@ module Rurubyby
         if class_constant.nil?
           # TODO namespace and superclass
           class_constant = Vm::ClassObject.new(@name, nil, nil)
-          puts "adding class '#{@name}' constant to scope #{context.scopes.last}"
+          #puts "adding class '#{@name}' constant to scope #{context.scopes.last}"
           context.vm.new_class(klass)
           context.scopes.last.set_constant(@name, class_constant)
         end

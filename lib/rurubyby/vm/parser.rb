@@ -13,7 +13,7 @@ module Rurubyby
 
       def ast
         program_node = Prism.parse(text).value
-        puts program_node.inspect
+        #puts program_node.inspect
 
         raise "Unexpected Prism.parse value type #{value.class} expecting Prism::ProgramNode" unless program_node.is_a?(Prism::ProgramNode)
 
@@ -147,7 +147,7 @@ module Rurubyby
         when Prism::AliasMethodNode
           raise "new_name #{prism_node.new_name.class} must be a Prism::SymbolNode" unless prism_node.new_name.class.equal?(Prism::SymbolNode)
           raise "old_name #{prism_node.old_name.class} must be a Prism::SymbolNode" unless prism_node.old_name.class.equal?(Prism::SymbolNode)
-          puts "new_name #{prism_node.new_name.unescaped.class}"
+          #puts "new_name #{prism_node.new_name.unescaped.class}"
           Ast::MethodAlias.new(prism_node.new_name.unescaped.to_sym, prism_node.old_name.unescaped.to_sym)
 
         else
